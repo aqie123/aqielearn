@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>事件</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<script src="vue1.0/dist/vue.js"></script>
+	<style type="text/css">
+		.red1{
+			color:#FF0000;
+		}
+		.blue1{
+			background: #0A5DED;
+		}
+	</style>
+</head>
+<body>
+	<div id="box" @click="showout()" @contextmenu="showout()">	<!-- 事件冒泡 -->
+		<input type="button" name="" value="按钮" v-on:click="show($event,'按钮1')">		
+		<!-- 这个是测试 -->
+
+		<input type="button" name="" value="按钮2" @click.stop="show($event,'按钮2')">		 <!-- 阻止事件冒泡 -->
+		<input type="button" name="" value="按钮3" @contextmenu.prevent.stop="show($event,'右键点击')">
+		<!-- 阻止默认行为 -->
+		<!-- 简写@click="" -->
+		<input type="text" name=""  @keyup="show2($event)" @click.stop="">
+		<input type="text" name=""  @keydown.left="show2($event)" @click.stop="">
+		<!-- 绑定按键 -->
+		<!-- 完美阻止点击冒泡事件 -->
+		<!-- <img src="{{url}}" alt=""> 这个会触发请求-->
+		<img v-bind:src="url" alt="" >		<!-- 绑定属性 -->	
+		<img :src="url" alt="" :width="w" :title="t">			<!--简写-->
+		<strong :class="[red,blue] ">文字</strong> 		<!-- red是数据,第一种用法 -->  
+		<div :class="{red1:a,blue1:b}">class第二种用法，json写法(直接写类名)</div>
+		<div :class="json">class第三种用法</div>
+
+		<div :style="{color:'red'}">style第一种用法</div>
+		<div :style='[c,d]'>style第二种用法</div>		<!-- 分清楚数据和json -->
+
+
+
+	</div>
+
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:'#box',
+			data:{
+				url:'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=17528307,3233666440&fm=80&w=179&h=119&img.JPEG',
+				w:'200px',
+				t:'永远的星爷',
+				red:'red1',
+				blue:'blue1',
+				a:true,
+				b:false,
+				c:{
+					color:'red',
+					fontFamily:'微软雅黑'
+				},
+				d:{background:'#E4E60F'},
+				json:{
+					red1:true,
+					blue1:this.b  			//我勒个去
+				}
+			},
+			methods:{
+				show:function(ev,b){
+					// alert(ev.clientX);
+					alert(b)
+					// ev.cancelBubble = true;   取消冒泡
+					// ev.preventDefault(ev);		//阻止默认行为   只是默认行为ok!!!
+
+				},
+				show2:function(ev){
+					// alert(ev.keyCode)
+					// if(ev.keyCode==13) 
+					alert('你按回车了')
+				},
+				showout:function(){
+					alert("这是外部盒子")
+				}
+			}
+
+		});
+	</script>
+</body>
+</html>

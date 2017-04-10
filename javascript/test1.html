@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <input type="" name="" value="" readonly="readonly">
+  <br>
+  <input type="" name="" value="" readonly="readonly">
+  <button>返回</button>
+  <script src='class/function.js'></script>
+  <script type="text/javascript">
+    var input = document.getElementsByTagName('input')[0];
+    var input2 = document.getElementsByTagName('input')[1];
+    var btn = document.getElementsByTagName('button')[0];
+  
+
+  input.value = GetQueryString("msg");
+  input2.value = GetQueryString("count");
+  btn.onclick = function(){
+    window.history.back(-1); 
+  }
+  </script>
+</body>
+</html>

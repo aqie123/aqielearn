@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue1.0 slot(位置，槽口)</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src="learn/vue-resource.js"></script>
+	<script src="vue1.0/vue-router.js"></script>
+</head>
+<body>
+	<div id="box">
+		<span v-html='a'></span>
+		<aaa>
+			<ul slot="ul-slot">
+				<li>我是通过slot占位显示的</li>
+			</ul>
+			<ol slot="ol-slot">
+				<li>aaa</li>
+				<li>bbb</li>
+				<li>ccc</li>
+			</ol>
+		</aaa>
+		<hr style="height:1px;border-top:2px dotted #f00;">
+		<p>vue->SPA应用(单页面应用)</p>
+		<p>vue-resouce 交互</p>
+		<p>vue-router 路由</p>
+	</div>
+	
+	
+	<template id="aaa">
+		<h2>我是aaa组件</h2>
+		<slot name="ul-slot">这是默认数据1</slot>
+		<slot name="ol-slot">这是默认数据2</slot>
+		<p>welcome slot</p>
+
+	</template>
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:'#box',
+			data:{
+				a:'<h3>slot用于占位置,有默认数据，默认一个slot会显示组件原来所有内容</h3>'
+			},
+			components:{
+				'aaa':{
+					template:'#aaa',
+				}
+			}
+			
+
+		})
+		Vue.config.devtools = true;
+	</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue2.0</title>
+	<script src="vue2.0/dist/vue.js"></script>
+
+	<script src='learn/vue-resource.js'></script>
+	<style type="text/css">
+
+	</style>
+</head>
+<body>
+	<div id="box">
+		{{msg}}
+		<input type="text" name="" >
+		<input type="button" name="" value="按钮" @click="get()">
+		<input type="button" name="" value="按钮" @click="jsonp()">
+		
+		
+	</div>
+	
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:'#box',		
+			data:{
+				msg:'aqie',
+			},
+			json:{
+
+			},
+			methods:{
+				get:function(){			//获取文本数据
+					// alert(1)
+					this.$http.get('1.php',{
+						a:1,				//传参
+						b:2
+					}).then(function(res){
+						// alert(res.status);  //状态码 200
+						
+						alert(res.data);
+					},function(res){
+						alert(res.status)	//404	
+					});
+				},
+				
+			},
+
+		})	
+		Vue.config.devtools = true;
+
+	</script>
+
+
+	
+</body>
+</html>

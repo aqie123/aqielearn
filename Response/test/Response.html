@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="css/response.css">
+</head>
+<body>
+<div class="container">
+	<header>
+		<h1>我是标题</h1>
+	</header>
+	<div class="header">
+		<h3>选择器(效率由高到低)</h3>
+		<p>important>内联>ID>标签|伪类|属性选择>伪对象>通配符>继承</p>
+		<ul>
+			<li>id选择器</li>
+			<li>类选择器</li>
+			<li>标签选择器</li>
+			<li>相邻选择器(h1+p)</li>
+			<li>子选择器(ul&lt;li) </li>
+			<li>后代选择器</li>
+			<li>通配符选择器</li>
+			<li>属性选择器(a[rel="external"])</li>
+			<li>伪类选择器(li:nth-child)</li>
+		</ul>
+		<p style="color:red">111</p>
+	</div>
+	<div class="drag">
+		<h3>五种基本布局</h3>
+		<ul>
+			<li>弹性布局(em为单位)</li>
+			<li>固定布局(像素为单位)</li>
+			<li>流体布局(百分比为单位)</li>
+			<li>混合布局</li>
+			<li>绝对定位布局(绝对定位的外栏)</li>
+		</ul>
+		<P>flexible grid layout 弹性网格布局</P>
+		<p>flexible image 弹性图片</p>
+		<p>media queries 媒体查询</p>
+		<p></p>
+		<details>
+		  <summary>viewport视口</summary>
+		  <p>布局视口(layout viewport)</p>
+		  <p>可视视口(visual viewport) 具体呈现区域</p>
+		  <p>理想视口(ideal viewport) 布局视口在设备上的最佳尺寸</p>
+			<p>123</p>
+		</details>
+
+	</div>
+	<footer>
+		<div class="f1 foot"></div>
+		<div class="f2 foot"></div>
+		<div class="f3 foot"></div>
+	</footer>
+</div>		
+	<script src="../public/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var drag = $('.drag');
+			var x,y;
+			var z=true;
+			drag.mousedown(function(ev){
+				var e = ev||window.ev;
+				 x = e.clientX-drag.offset().left;
+				 y = e.clientY-drag.offset().top;
+				 z=true;
+
+			});
+			drag.mousemove(function(ev){
+				var e = ev||window.ev;
+				if(z){
+					var left = e.clientX-x;
+					var top = e.clientY -y;
+					drag.css({
+						'left':left+'px',
+						'top':top+'px'
+					})
+				}
+				
+			});
+			
+			drag.mouseup(function(){
+				z=false;
+			
+			})
+
+
+		});
+		
+	</script>
+</body>
+</html>

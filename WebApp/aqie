@@ -1,0 +1,37 @@
+1.native APP
+2.Hybrid APP
+3.WEB app     REACT NATIVE构建界面拼接问题
+
+cpu -计算
+GPU -图形渲染
+
+跨域：
+1. iframe
+2.jsonp
+
+sublime配置："auto_complete_commit_on_tab": true,然后看Perferences/KeyBindings Defaul
+[
+    { "keys": ["enter"], "context":
+        [
+            { "key": "setting.auto_complete_commit_on_tab", "operand": true }
+        ]
+    },
+]
+
+一：交互
+  
+二：避免使用回调函数
+      1. 事件消息通知
+      2. ES6 Promise
+      3. ES6 generator(语言特性)
+    
+
+三：
+四：
+五：
+六：
+
+
+闭包：http://www.jb51.net/article/54397.htm
+
+http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html

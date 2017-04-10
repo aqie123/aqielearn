@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue测试</title>
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src=""></script>
+	<style type="text/css">
+		.disappear{
+			width: 100px;
+			height:100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		{{msg}}
+		<span v-text='msg'>这是等价的</span>
+		<span v-html='msg'>这是转译</span>
+		<input type="text" name=""  v-model="msg">		<!-- 这里不用大括号 -->
+		
+		<input type="text" name="" v-model="msg">
+		<!-- 这是双向绑定 -->
+		<span>{{msg2}}</span>
+		<span>{{msg3}}</span><br>
+		<span>{{arr}}</span><br>
+		<span>{{json}}</span><br>
+		<!-- 这是对象 -->
+		<ul>
+			<li v-for="value in arr" track-by="$index">{{value}} </li>
+		</ul>
+		<ul>
+			<li v-for='value in json'>{{value}} {{$index}} {{$key}}</li>
+		</ul>
+		<ul>
+			<li>简写</li>
+			<li v-for='(k,v) in json'>{{k}} {{v}} {{$key}} </li>
+			
+		</ul>
+		<input type="button" name="" value="按钮" class="btn" v-on:click="show()" >
+		<!-- -->
+		<input type="button" name="" value="按钮2" v-on:dblclick="add()">
+		<!-- 双击 -->
+		<div class="disappear" v-show="a"></div>
+		<!-- 显示隐藏 -->
+		<button class="btn2" v-on:click="a=false"> 消失</button>
+	</div>
+	
+	
+	
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		//v-model  指令扩展html标签属性
+		var c = new Vue({	//相当于controller
+			el:'#box',		//选择器
+			data:{
+				msg:'hello aqie',
+				msg2:12,
+				msg3:true,
+				arr:['apple','pear','banana','shzu'],
+				json:{a:'apple',b:'banana',c:'pear',d:'orange'},
+				a:true			//通过这里控制true/false		
+			},
+			methods:{
+					show:function(){
+						alert(this.msg)
+					},
+					add:function(){
+						// alert(this.arr)
+						this.arr.push('tomato')
+					}
+			}	
+		});	
+		Vue.config.devtools = true;	
+		
+	</script>
+</body>
+</html>

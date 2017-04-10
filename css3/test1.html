@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+  *{margin:0;padding: 0}
+  .colum{
+    width: 80%;
+    height: 200px;
+    margin:0 auto;
+    border: 1px solid red;
+    outline: 2px solid green;
+    outline-offset: 4px;
+    padding: 5px;
+    -webkit-column-gap:10px;
+    -webkit-column-rule: 1px dashed #0f0;
+    -webkit-column-count:3;
+    -moz-column-count:4;
+    resize: none;
+  }
+  .dimensional2,.inner{
+    width: 200px;
+    height: 200px;
+    border:1px solid red;
+    margin: 0 auto;
+  }
+  .inner{
+    border:1px solid blue;
+    /*transform-origin: 0 0;依照点*/
+    /*位移*/
+    transform: translate(10px,10px);
+    /*缩放*/
+    transform: scale(0.5,0.5);
+    /*旋转*/
+    transform: rotate(10deg);
+    /*斜切*/
+    transform: skew(10deg,10deg);
+    /*六维矩阵*/
+    -webkit-transform: matrix(0.5,0.1,0,0.8,100,100);(缩放,斜切,缩放,xy平移)
+
+  }
+  .one,.two,.three{
+    width:200px;
+    height: 200px;
+    border: 1px solid #888;
+    margin-bottom: 50px
+  }
+  .one{
+    /*transform: rotate(10deg);*/
+    
+  }
+  .two{
+    position: relative;
+    border-radius:50%;
+    box-shadow: 3px 2px 4px #111;
+    background: -webkit-gradient(radial,100 100,0,100 100,100,from(#00f),to(#0f0));
+  }
+  body{
+    /*perspective: 500px;*/
+  }
+  /*3D旋转*/
+  .three{
+    width:300px;
+    height: 300px;
+    margin: 0 auto;  
+    /*设置景深*/
+    perspective: 500px;
+    /*灭点*/
+    perspective-origin: 50px 50px;
+    transform: rotateY(40deg);
+    transform-style: preserve-3d;
+  }
+  .inn{
+    width: 200px;height:200px;
+    border: 1px solid blue;
+    margin: 50px;
+    transform-origin: top center;
+    transform: rotateX(40deg);
+  }
+  /*3d正方体*/
+  .out{
+    position: relative;
+    width: 400px;height:400px;
+    border: 1px solid blue;
+    margin: 200px auto;
+    perspective: 500px;
+    /*渐变动画*/
+    -webkit-transition: width 2s ease 2s;
+  }
+  .out:hover{
+    width:800px;
+  }
+  .box{
+    position: relative;
+    margin:100px;
+    width: 200px;height:200px;
+    border: 1px solid blue;
+    /*六个面跟随box转动*/
+    transform-style: preserve-3d;
+    transform-origin: 50% 50% 100px;
+    /*背面可见*/
+    -webkit-backface-visibility: hidden;
+    transform: matrix3d(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
+  }
+  .box li{
+    position: absolute;
+    width: 200px;height:200px;
+    line-height: 200px;
+    text-align: center;
+    font-size: 40px;
+    list-style: none;
+  }
+  .box li:nth-of-type(1){
+    background: red;
+    top:-200px;
+    left: 0;
+    transform-origin: bottom;
+    transform: rotateX(-90deg);
+  }
+  .box li:nth-of-type(2){
+    background: #F57A0F;
+    top:0px;
+    left: -200px;
+    transform-origin: right;
+    transform: rotateY(90deg);
+  }
+  .box li:nth-of-type(3){
+    background: #FDFB08;
+    top:0px;
+    left: 0;
+  }
+  .box li:nth-of-type(4){
+    background: #0DF212;
+    top:0px;
+    left: 200px;
+    transform-origin: left;
+    transform: rotateY(-90deg);
+  }
+   .box li:nth-of-type(5){
+    background: #0D12F7;
+    top:200px;
+    left: 0;
+    transform-origin: top;
+    transform: rotateX(90deg);
+  }
+   .box li:nth-of-type(6){
+    background: #F80BE7;
+    top:0px;
+    left: 0;
+    transform: translateZ(200px);
+  }
+  dl{
+    position: absolute;
+    width: 140px;
+    height: 30px;
+    left:130px;top:400px;
+    border: 1px solid red;
+    border-radius: 30%;
+  }
+  dl dd{
+    width:15px;
+    height: 15px;
+    border-radius: 50%;
+    box-shadow: 1px 1px 2px #111;
+    float:left;
+    margin:5px 10px;
+    cursor: pointer;
+  }
+  
+
+  /*+++++++++++++++++倒影++++++++++++++*/
+
+  .inverted{
+    border: 1px solid red;
+    width:202px;
+    height: 202px;
+    margin: 400px auto;
+    -webkit-transform-style: preserve-3d;
+    /*-webkit-perspective: 500px;*/
+    -webkit-box-reflect: below 5px -webkit-gradient(linear,50% 0,50% 100%,color-stop(0,rgba(0,0,0,0)),
+      color-stop(0.5,rgba(0,0,0,0.2)),color-stop(0.8,rgba(0,0,0,0.8)));
+    
+  }
+  .inverted img{
+    /*-webkit-transform-origin: bottom;*/
+    -webkit-transition: 2s -webkit-transform ease ,1s width ease 2s,1s height ease 1s;
+    
+  }
+  img:hover{
+    -webkit-transform: rotateX(-30deg) rotateY(30deg);
+    width:300px;
+    height:300px;
+  }
+  </style>
+ 
+</head>
+<body>
+  <h2>文字分栏排布</h2>
+  <div class="colum">
+    从前一个阴郁的子夜，我独自沉思，慵懒疲竭，
+　　面对许多古怪而离奇、并早已被人遗忘的书卷;
+　　当我开始打盹，几乎入睡，突然传来一阵轻擂，
+　　仿佛有人在轻轻叩击——轻轻叩击我房间的门环。
+　　“有客来也”，我轻声嘟喃，“正在叩击我的门环，
+　　惟此而已，别无他般。”
+　　哦，我清楚地记得那是在风凄雨冷的十二月，
+　　每一团奄奄一息的余烬都形成阴影伏在地板。
+　　我当时真盼望翌日——因为我已经枉费心机
+　　想用书来消除伤悲，消除因失去丽诺尔的伤感，
+　　因那位被天使叫作丽诺尔的少女，她美丽娇艳，
+　　在此已抹去芳名，直至永远。
+　　那柔软、暗淡、飒飒飘动的每一块紫色窗布
+　　使我心中充满前所未有的恐惧，我毛骨悚然;
+　　为平息我心儿的悸跳.我站起身反复念叨
+　　“这是有客人想进屋，正在叩我房间的门环，
+　　更深夜半有客人想进屋，正在叩我房间的门环，
+　　惟此而已，别无他般。”
+  </div>
+  <p>2d转换</p>
+  <div class="dimensional2">
+    <div class="inner"></div>
+  </div>
+  <div class="one"></div>
+  <div class="two"></div>
+  <div class="three">
+    <div class="inn"></div>
+  </div>
+  <div class="out">
+    <ul class="box">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+    </ul>
+    <dl>
+      <dd style="background-color: red"></dd>
+      <dd></dd>
+      <dd></dd>
+      <dd></dd>
+    </dl>
+  </div>
+
+  <!-- 倒影 -->
+  <div class="inverted">
+    <img src="../html5/images/0.png" width="200px" height="200px">
+  </div>
+  <script type="text/javascript">
+    var box = document.getElementsByClassName('colum')[0];
+    var text = box.innerHTML;
+      text = text.replace(/\s+/g,"");
+      box.innerHTML= text;
+
+    // 二维变换
+    var one = document.getElementsByClassName('one')[0];
+    var deg=0;
+    // setInterval(function(){
+    //   deg++;
+    //   setcss3(one,{  
+    //     transform:"rotate("+deg+"deg)",
+    //     "transform-origin": "50% 50%",
+    //   });
+    // },60)
+    
+
+    function setcss3(obj,attrObj) {
+      for(var i in attrObj) {
+        var newi = i;
+        if(newi.indexOf("-")>0){
+          var num = newi.indexOf('-');
+          newi=newi.replace(newi.substr(num,2),newi.substr(num+1,1).toUpperCase());
+        }
+        // obj.style[newi] = attrObj[i];
+        newi = newi.replace(newi.charAt(0),newi.charAt(0).toUpperCase());
+        obj.style["webkit"+newi] = attrObj[i];
+        obj.style["moz"+newi] = attrObj[i];
+        obj.style["o"+newi] = attrObj[i];
+        obj.style["ms"+newi] = attrObj[i];
+      }
+    }
+
+    // 钟表
+    var two = document.getElementsByClassName('two')[0];
+    drawMark(two);
+    var time = new Date();
+    // 指针角度
+    var ha = time.getHours();
+    var ma = time.getMinutes();
+    var sa = time.getSeconds();
+    // alert(ha)
+    var hours = drawPoint(two,100,100,60,5,'red',ha*30+ma*6/12-90);
+    var minutes = drawPoint(two,100,100,80,3,'#333',ma*6-90);
+    var seconds = drawPoint(two,100,100,90,1,'#222',sa*6-90);
+    setInterval(function(){
+      var time = new Date();
+      // 指针角度
+      var ha = time.getHours();
+      var ma = time.getMinutes();
+      var sa = time.getSeconds();
+      setcss3(hours,{
+        transform:"rotate("+(ha*30+ma*6/12-90)+"deg)"
+      })
+      setcss3(minutes,{
+        transform:"rotate("+(ma*6-90)+"deg)"
+      })
+      setcss3(seconds,{
+        transform:"rotate("+(sa*6-90)+"deg)"
+      })
+    },1000)
+
+    function drawMark(obj){     //画出刻度
+      for(var i=0;i<60;i++){
+        var w = 3,h=8;
+        if(i%5===0){
+          w=4;h=10;
+        }
+        var div = document.createElement("div");
+        div.style.cssText = "width:"+w+"px;height:"+h+"px;background:#111;position:absolute;\
+        top:0;left:100px";
+        setcss3(div,{
+          transform:"rotate("+i*6+"deg)",
+          "transform-origin":"0 100px"
+
+        })
+        obj.appendChild(div);
+      }
+    }
+
+    function drawPoint(obj,starx,stary,width,height,color,angle){     //绘制指针
+      var div = document.createElement("div");
+      div.style.cssText="width:"+width+"px;height:"+height+"px;position:absolute;top:"+starx+"px;left:"+stary+"px;\
+      background:"+color+";";
+      setcss3(div,{
+        transform:"rotate("+angle+"deg)",
+        "transform-origin":"0px 0px"
+      })
+      obj.appendChild(div);
+      return div;
+    }
+
+
+
+    // 3D正方体旋转
+    var box = document.getElementsByTagName('ul')[0];
+    var ang = 0;
+    setInterval(function(){
+      return;
+      ang +=5;
+        setcss3(box,{
+          transform:"rotateX("+ang+"deg)"
+      })
+      },60)
+
+    // 3d轮播图
+    var btn = document.getElementsByTagName('dd');
+    var num3=0;
+    function move(){
+      num3++;
+      if(num3 ==4){
+        num3=0;        // 防止越转越快
+      } 
+      changeA(box,(num3-1)*90,num3*90);
+      for(var j=0;j<btn.length;j++) {
+          btn[j].style.backgroundColor ="#ccc";
+        }
+       btn[num3].style.backgroundColor = "#f00";
+    }
+    var time5 = setInterval(move,3000)
+
+    for (var i=0;i<btn.length;i++){
+      btn[i].index = i;
+      btn[i].onclick=function(){
+        for(var j=0;j<btn.length;j++) {
+          btn[j].style.backgroundColor ="#ccc";
+        }
+        this.style.backgroundColor = "#f00";
+        changeA(box,(this.index-1)*90,this.index*90);
+        num3 = this.index;
+      }
+      btn[i].onmouseover=function(){
+        clearInterval(time5);
+      }
+      btn[i].onmouseout=function(){
+        time5 = setInterval(move,3000);
+      }
+    }
+    
+    function changeA(obj,startA,endA){
+       clearInterval(obj.t);
+       obj.t =  setInterval(function(){
+        if(startA == endA){
+          clearInterval(obj.t);
+        }
+        var speed = (endA-startA)*0.3;
+        speed = speed<0 ? Math.floor(speed) : Math.ceil(speed);
+        startA+=speed;
+        setcss3(obj,{
+          transform:"rotateY("+(startA+speed)+"deg)"
+        })
+      },100)
+    }
+  </script>
+</body>
+</html>

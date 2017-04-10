@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>Vue留言板</title>
+  <link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+  <!-- <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.black.css"> -->
+  <!-- <script src="vue1.0/dist/vue.js"></script> -->
+  
+
+</head>
+<body>
+
+<!-- 模态框 -->
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-index="{{nowIndex}}"> 
+    <!-- data-index随便写的 用来判断点击那个删除按钮，方便展示-->      
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">确认删除吗</h4>
+            </div>
+            <div class="modal-body">
+              模态框让删除变得更复杂
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" >确认</button>
+              <!-- 这里传入参数 -->
+            </div>
+          </div>
+        </div>
+    </div>  
+
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="del()">全部删除</button>
+
+    <script src="public/js/jquery-3.1.1.min.js"></script>
+  <script src="public/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+  function del(){
+
+    $('#myModal').on('show.bs.modal',function(){
+              console.log(123)
+              $('.modal-title').html("确认删除全部吗???");
+     })
+  }
+  </script>
+  </body>
+</html>

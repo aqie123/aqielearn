@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue2.0</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<script src="node_modules/vue/dist/vue.js"></script>
+	<!-- <script src="learn/vue-resource.js"></script> -->
+	<script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+	<script src="node_modules/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+	<div id="box">
+		<span v-html='a'></span>
+		<ul>
+			<h3>渐进式框架</h3>
+			<li>v-model 主要在表单里使用(双向)</li>
+			<li>v-text {{}} 文本渲染</li>
+			<li>v-show 显示隐藏,display:none</li>
+			<li>v-if 不显示话,根本不存在</li>
+			<li>v-bind (图片动态绑定地址)</li>
+			<li>v-for 循环</li>
+			<li>v-on 事件绑定</li>
+		</ul>
+	</div>
+
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:'#box',
+			data:{
+				a:'aqie'
+			},
+			methods:{
+				
+			}
+			
+
+		})
+		Vue.config.devtools = true;
+	</script>
+</body>
+</html>

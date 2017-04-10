@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue2.0</title>
+	<link rel="stylesheet" type="text/css" href="../vue/public/css/bootstrap.css">
+	<script src="node_modules/vue/dist/vue.js"></script>
+	<script src="../vue/learn/vue-resource.js"></script>
+	<script src="node_modules/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+	<div id="box">
+		<span v-html='a'></span>
+		<my-aaa></my-aaa>
+		<Home></Home>
+	</div>
+	<template id="aaa">
+		<div>
+			<h4>我是组件aaa</h4>
+			<p>必须有个根元素</p>
+		</div>		
+	</template>
+	<template id="bbb">
+		<div>
+			<h4>我是组件home</h4>
+			<p>必须有个根元素</p>
+		</div>		
+	</template>
+
+	<script src="../vue/public/js/jquery-3.1.1.min.js"></script>
+	<script src="../vue/public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		
+		var Home = {		// 2.0组件
+			template: '#bbb'
+		}
+		Vue.component('home',Home);
+		
+		Vue.component('my-aaa',{
+			template: '#aaa'
+		});
+		new Vue({
+			el:'#box',
+			data:{
+				a:'aqie'
+			},
+			methods:{
+				
+			}
+			
+
+		})
+		Vue.config.devtools = true;
+	</script>
+</body>
+</html>

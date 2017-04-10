@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue1.0过滤器+交互(百度下拉菜单)</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src="learn/vue-resource.js"></script>
+	<style type="text/css">
+		.gray{
+			background-color: #918585;
+		}
+		input{
+			width:250px;
+		}
+		ul{
+			position: relative;
+			margin-left: -40px;
+		}
+		li{
+			width:250px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			list-style: none;
+
+		}
+		p{
+			border:1px solid;
+			width:250px;
+			text-align: center;
+			height: 30px;
+			line-height: 30px;
+		}
+		textarea{
+			float: right;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<input type="text" name="" v-model="msg"><br>
+		{{msg}} <br>
+		{{*msg}}  <br>		<!-- 防止更新 -->
+		{{{msg}}} 	<br>	<!-- html转译输出 -->
+		<!-- 过滤器 -->
+		{{'welcome'|uppercase}}<br>		<!-- 转大写 -->
+		{{'WELCOME'|lowercase|capitalize}}<br>		<!-- 转小写,首字母大写 -->
+		{{12|currency '￥'}}
+		<!-- 钱的标志  传参-->
+
+		<input type="button" name="" value="按钮" @click="get">
+		<input type="button" name="" value="按钮" @click="post()">
+		<input type="button" name="" value="按钮" @click="jsonp()">
+		<input type="button" name="" value="按钮" @click="jsonp2()"><br>
+
+		<!-- 百度下拉菜单 -->
+		<input type="text" name="" v-model="t1" @keyup="jsonp3($event)" @keydown.down="changeDown()" @keydown.up.prevent="changeUp()">
+		<button @click="search()">啊切一下</button>
+		<ul>
+			<li v-for="value in myData" :class="{gray:$index==now}">
+				{{value}}
+			</li>
+			<p v-show="myData.length==0">暂无数据</p>
+		</ul>
+		<!-- 百度下拉菜单 结束-->
+
+		<!-- 有道翻译 -->
+		<input type="text" name="" v-model="t1" @keyup="jsonp3($event)"><button @click="search2()">有道一下</button>
+		<ul>
+			<li v-for="value in myData2"></li>
+			{{value}}
+		</ul>
+	</div>
+	<textarea cols="50" rows="10">
+		搜索接口
+		https://www.baidu.com/s?ie=utf-8&newi=1&mod=1&isbd=1&isid=62178E1113220225&wd=%E7%88%B1%E5%A5%87%E8%89%BA&rsv_spt=1&rsv_iqid=0x9e7cd4e000006416&issp=1&f=8&rsv_bp=0&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=1&rsv_sug3=2&rsv_sug1=1&rsv_sug7=100&rsv_sid=1423_21083_21928_20928&_ss=1&clist=&hsug=&csor=1&pstg=1&_cr1=22705
+	</textarea>
+	<textarea cols="40" rows="10">
+		数据接口
+		https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&json=1&p=3&sid=21867_1423_21083_21928_20928&req=2&bs=js%E8%B4%9F%E6%95%B0%E5%8F%96%E4%BD%99%E6%95%B0&csor=1&cb=jQuery1102018395894256257428_1483893989796&_=1483893989799
+
+		
+	</textarea>
+
+	<textarea cols="40" rows="10">
+		有道
+		http://dsuggest.ydstatic.com/suggest.s?query=youd%20&keyfrom=dict2.top.suggest&o=form&rn=10&h=10&le=eng
+
+		http://www.youdao.com/w/eng/'+this.t2+'/#keyfrom=dict2.index
+	</textarea>
+
+	<textarea cols="40" rows="10">
+		谷歌数据
+		https://www.google.com/complete/search?client=serp&hl=zh-CN&gs_rn=64&gs_ri=serp&tok=dhGqOsLyIdFHlRHqa0JNbQ&pq=r&cp=0&gs_id=2sc&q=&xhr=t
+
+		https://www.google.com/complete/search?client=hp&hl=zh-CN&gs_rn=64&gs_ri=hp&tok=CpXHjI3IHb-v1hT_KjSwMA&cp=1&gs_id=mf&q=a&xhr=t
+
+		https://www.google.com/complete/search?client=hp&hl=zh-CN&gs_rn=64&gs_ri=hp&tok=CpXHjI3IHb-v1hT_KjSwMA&cp=4&gs_id=37l&q=aqie&xhr=t
+		
+		https://www.google.com/complete/search?client=serp&hl=zh-CN&gs_rn=64&gs_ri=serp&tok=clN4T2bPIGV6odA9fnpcbw&pq=dddddddddddd&cp=6&gs_id=3t3&q=baidua&xhr=t
+
+		https://www.google.com/gen_204?atyp=i&ct=slh&cad=&ei=PZSzWMOQAoz28gXr7qpg&s=4&v=2&pv=0.5548015485950126&me=17:1488164727884,V,0,0,0,0:37865,h,1,3,i:9,h,1,3,o:697,U,38571:2,V,0,0,1366,217:14496,e,B&zx=1488164780957
+
+		https://www.google.com/gen_204?atyp=i&ct=slh&cad=&ei=PZSzWMOQAoz28gXr7qpg&s=2&v=2&pv=0.5548015485950126&me=7:1488163921327,V,0,0,0,0:778970,U,778970:1,V,0,0,1366,217:2091,h,1,3,i:4992,h,1,3,o:1578,e,B&zx=1488164708960
+
+		https://www.google.com/gen_204?atyp=i&ct=slh&cad=&ei=PZSzWMOQAoz28gXr7qpg&s=3&v=2&pv=0.5548015485950126&me=13:1488164708961,V,0,0,0,0:12113,U,12113:0,V,0,0,1366,217:6798,e,B&zx=1488164727881
+	</textarea>
+	
+
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:'body',		
+			data:{
+				msg:'aqie',
+				myData:[],
+				t1:'',
+				now:-1,
+				t2:'',
+				mydata2:[],
+				
+			},
+			json:{
+
+			},
+			methods:{
+				get:function(){			//获取文本数据
+					// alert(1)
+					this.$http.get('1.php',{
+						act:'ww',				//传参
+						b:2
+					}).then(function(res){
+						// alert(res.status);  //状态码 200
+						
+						alert(res.data);
+					},function(res){
+						alert(res.status)	//404	
+					});
+				},
+				post:function(){
+					this.$http.post('2.php',{
+						a:20,
+						b:1
+					},{
+						emulateJSON:true			//post加上才能传参
+					}).then(function(res){
+						alert(res.data)
+					},function(res){
+						alert(res.status)
+					});
+
+				},
+				jsonp:function(){
+					this.$http.jsonp('https://sug.so.360.cn/suggest',{
+						word:'php'					//关键词
+					}).then(function(res){
+						alert(res.data.s)
+					},function(res){
+						alert(res.status)
+					});
+
+				},
+				jsonp2:function(){			// 百度搜索关键词
+					this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{
+						wd:'javascript'
+					},{
+						jsonp:'cb'				//callback名字
+					}).then(function(res){
+						alert(res.data.s)
+					},function(res){
+						alert(res.status)
+					});
+
+				},
+				jsonp3:function(ev){
+					if(ev.keyCode==38 ||ev.keyCode==40){    //按上下键，不再接收数据
+						return
+					};
+					if(ev.keyCode==13){						//按回车进行搜索
+						window.open('https://www.baidu.com/s?wd='+this.t1);
+						this.t1='';
+					}
+
+					this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{  //数据接口
+						wd:this.t1
+					},{
+						jsonp:'cb'				//callback名字
+					}).then(function(res){
+						this.myData=res.data.s
+					},function(res){
+						alert(res.status)
+					});
+
+				},
+				changeDown:function(){
+					this.now++;
+					this.now %= this.myData.length;
+					this.t1=this.myData[this.now];
+				},
+				changeUp:function(){
+					this.now--;
+					// alert(this.myData.length)   //10					
+					if(this.now<0){
+						this.now=this.now+this.myData.length;
+						this.t1=this.myData[this.now];
+					}
+					// console.log(this.now)
+				},
+				search:function(){
+					// alert(this.myData.length) 
+					
+					window.open('https://www.baidu.com/s?wd='+this.t1);
+					this.t1='';
+					this.myData=[];
+
+				},
+				jsonp4:function(ev){		// 有道翻译http://impservice.dictapp.youdao.com/imp/request.s
+					this.$http.jsonp('http://impservice.dictapp.youdao.com/imp/request.s',{  //数据接口
+						key:this.t1
+					},{
+						jsonp:'callback'				//callback名字
+					}).then(function(res){
+						alert(res)
+						this.myData2=res.data.s
+					},function(res){
+						alert(res.status)
+					});
+
+				},
+				search2:function(){
+					window.open('http://www.youdao.com/w/eng/'+this.t1+'/#keyfrom=dict2.index');
+				}
+
+
+			},
+
+		})
+	</script>
+</body>
+</html>

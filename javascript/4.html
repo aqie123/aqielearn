@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+
+
+
+  <script type="text/javascript">
+  // split 把字符串分割成字符数组
+    var url="http://aqie123.vicp.io/php/yiitest/basic/web/index.php?r=product%2Findex&cateid=25";                                                      
+    var therequest=new Object();                                                  
+    if(url.indexOf("?")!=-1){                                                     
+      var str=url.substr(1); 
+      // alert(str)                                                   
+      strs=str.split("&");
+      console.dir(strs);                                                    
+      for(var i=0;i<strs.length;i++){                                           
+        therequest[strs[i]]=strs[i].split("=")[1];       
+      }                                                                         
+    } 
+    console.dir(therequest);
+    for(var i in therequest){
+      document.write(i+"<br />"+therequest[i]+"<br />");
+    }
+
+
+     /*GetQueryString(name)
+      {
+           var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+           var r = window.location.search.substr(1).match(reg);
+           alert(r)
+           if(r!=null)return  unescape(r[2]); 
+           return null;
+      }
+
+       var id=GetQueryString("id");
+       alert(id)
+       */
+
+       var url=location.search;                                                      
+        var therequest=new Object();                                                  
+        if(url.indexOf("?")!=-1){                                                     
+          var str=url.substr(1);                                                    
+          strs=str.split("&");                                                      
+          for(var i=0;i<strs.length;i++){                                           
+            therequest[strs[i].split("=")]=unescape(strs[i].split("=")[1]);       
+          }                                                                         
+        }  
+  </script>
+</body>
+</html>
+ 

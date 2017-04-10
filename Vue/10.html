@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue1.0 动画</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="public/css/libs/animate.css">
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src="learn/vue-resource.js"></script>
+	<style type="text/css">
+	#box{
+		width:400px;
+		margin:0 auto;
+		border:1px solid;
+	}
+		#div1,#div2{
+			width:100px;
+			height:100px;
+			background-color: red;
+		}
+		#div2{
+			background-color: green;
+		}
+		.fade-transition{		
+			transition: 1s all ease;
+		}
+		.fade-enter{
+			/*进入动画*/
+			opacity:0;
+			transform: translateX(200px);
+
+		}
+		.fade-leave{
+			/*离开动画*/
+			opacity:0;
+			transform: translateX(200px);
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<a href="http://www.365cmd.com/forum.php?mod=viewthread&tid=6793&highlight=javascript"><span v-text='a'></span></a>
+		<button id="btn" @click="toggle">按钮啊切</button>
+			<!-- 给动画自定义名称 传统方法-->
+		<div id="div1" v-show="bsign" transition="fade" ></div>
+
+		<p>vue实现动画</p>
+		<div id="div2" class="animated" transition='bounce' v-show='bsign'></div>
+	</div>
+
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<!-- <script src="public/js/bootstrap.min.js"></script> -->
+	<script type="text/javascript">
+		new Vue({
+			el:'#box',
+			data:{ 
+				a:'aqie',
+				bsign:true
+			},
+			json:{
+
+			},
+			methods:{
+				/*toggle:function(){
+					// alert(1);
+				}*/
+				toggle(){		//对象写法  ,这个就是实现出现隐藏
+					this.bsign=!this.bsign;  	//这个厉害了
+				},
+			},
+			transitions:{				//这里加动画
+				bounce:{
+					enterClass:'zoomInLeft'	,	//animated里面class
+					leaveClass:'zoomOutRight'
+				}
+			}
+			
+
+		});
+		Vue.config.devtools = true;
+	</script>
+</body>
+</html>

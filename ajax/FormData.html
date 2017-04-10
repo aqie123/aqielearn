@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>formdata使用</title>
+    <script>
+        /**
+         * formData
+         * 特殊字符无需编码
+         */
+        window.onload = function(){
+            var form = document.getElementsByTagName('form')[0];
+            form.onsubmit = function(evt){
+
+                //1.收集用户输入表单信息
+                var formData = new FormData(form);
+                //2.信息提交给服务器端
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState === 4){
+                        alert(xhr.responseText);
+                    }
+                };
+                xhr.open('post','./formData.php');
+
+                // FormData 无需调用下面方法
+                // xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+                xhr.send(formData);
+                // 阻止浏览器默认表单提交
+                evt.preventDefault();
+                //3.
+            }
+        }
+    </script>
+</head>
+<body>
+
+<form action="./index.php" method="post">
+    <p>用户名：<input type="text" name="username" /></p>
+    <p>密码：<input type="password" name="password" /></p>
+    <p>邮箱：<input type="text" name="email" /></p>
+    <p><input type="submit" value="提交"></p>
+</form>
+</body>
+</html>

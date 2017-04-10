@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>响应式图片</title>
+    <style type="text/css">
+        html,* {margin: 0;padding: 0}
+        .content{
+            width: 100%;
+            margin:0 auto;
+        }
+        .content img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <img class="image" src="img/480.png" srcset="img/480.png 480w, img/800.png 800w,img/1600.png 1600w" sizes="(min-width:800px) calc(100vm - 30em), 100vm"></img>
+        <br>
+        <picture>
+            <source  media="(max-width:36em)" srcset="img/tiannanmen-s.jpg 768w"/>
+            <source  media="(orientation:landscape)" srcset="img/tiananmen-s.jpg 768w">
+            <!-- 针对横屏 -->
+            <source srcset="img/tiannanmen.jpg 1800w">
+            <!-- type属性 -->
+            <source src="" type="image/svg+xml" srcset="logo.svg 480w, logo.svg 800w, logo.svg 1600w">
+            <source src="" type="image/webp" srcset="logo.webp 480w, logo-m.webp 800w, logo-l.webp 1600w">
+            <img src="img/tiannamen.jpg">
+        </picture>
+    </div>
+    <p>内容设置为50%，当宽度到480时，图片就会改变</p>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue1.0vm实例用法2+过滤器2</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src="learn/vue-resource.js"></script>
+</head>
+<body>
+	<div id="box">
+		<span v-text='a'></span>
+		<button @click='add'>添加</button>
+
+		<p>限制加过滤数据</p>
+		<ul>
+			<li v-for='value in arr | limitBy 7 arr.length-7 | filterBy a' track-by='$index'>{{value}}</li>
+			<!-- 可以是$index也可以是uid -->
+		</ul>
+		<input type="" name="" @keyup='show | debounce 2000' v-model='a'>
+
+		<!-- 进行排序 -->
+		<ul>
+			<li v-for='value in arr | orderBy -1'>{{value}}</li>
+		</ul>
+		<p>自定义过滤器</p>
+		<span>{{a | toDou 1 2}}</span>
+		<p>时间过滤器</p>
+		<span>{{b | date}}</span>
+
+		<p>过滤html标记</p>
+
+		<textarea v-model='c | filterHtml' cols="50" rows="10"></textarea><br>
+		<!-- 双向过滤器 数据->视图 model->view view->model -->
+		<span v-html="c"></span>
+
+	</div>
+	<!-- 过滤器
+		debounce:配合事件,延迟2000毫秒
+		limitBy：限制5个(几个，从哪开始) 
+		filterBy ：过滤数据(只有有a才出现)(过滤谁)			这个可以扩展
+		orderBy:排序(按谁排序，1/-1)
+	 -->
+
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+//todou过滤器	
+	Vue.filter('toDou',function(input,a,b){		//默认接受第一个参数
+		alert(a+','+b)
+		return input<10 ? '0'+input : input;
+	});
+//事件过滤器
+	Vue.filter('date',function(index) {
+		// return Date(index);		//Tue Jan 10 2017 02:47:00 GMT+0800 (中国标准时间)
+		var oDate = new Date(index);
+		return oDate.getFullYear()+'-'+(oDate.getMonth()+1)+'-'+oDate.getDate()
+		+'　'+oDate.getHours()+':'+oDate.getMinutes()+':'+oDate.getSeconds();
+	});
+
+//双向过滤器
+	Vue.filter('filterHtml',{		// return input.replace(/<[^<+]>/g,'');
+		read:function(input){		//默认自带函数  model->view
+			// alert("这里可以执行")
+			return input.replace(/<[^<]+>/g,'');
+		},
+		write:function(val){			//view->model
+			// console.log(val);
+			// return val;
+		}
+
+	});
+		var vm= new Vue({
+			aa:'自定义属性',
+			show:function(){
+				// alert('自定义函数!')
+			},
+			data:{
+				a:'aqie',
+				arr:['apple','banana','pear','background','aaaaa'],
+				b:Date.now(),
+				c:'<strong>辛苦了</strong>'
+			},
+			json:{
+
+			},
+			methods:{
+				add:function(){
+					this.arr.push('orange');
+				},
+				show:function(){
+					// alert(0)
+				}
+			},
+			jsonp:function(ev){}
+			
+
+		}).$mount('#box');	//手动挂载
+		Vue.config.devtools = true;
+		//调用自定义属性和函数
+		console.log(vm.$options.aa);
+		vm.$options.show();
+
+		//查看data里面数据状态
+		vm.$log();
+	</script>
+</body>
+</html>

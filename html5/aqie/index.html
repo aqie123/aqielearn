@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>小球碰撞</title>
+  <style type="text/css">
+    *{margin:0; padding: 0}
+    .start{
+      width: 1024px;
+      height: 670px;
+      background: url(images/3.jpg);
+      background-size: cover;
+      text-align: center;
+      line-height: 670px;
+
+    }
+    button{
+      position: absolute;
+      display: inline-block;
+      width:150px;
+      height: 150px;
+      border-radius: 50%;  
+      margin-top: 275px ;
+      background: #14BEFE ;
+      box-shadow: 3px 3px 5px #055C88;
+      border: none;
+      opacity: 0.6;
+      font-size: 20px;
+    }
+    button:hover{
+      box-shadow: 1px 1px 9px #CA22DF;
+      color: #fff;
+      font-weight: 700;
+    }
+    .text{
+      position: absolute;
+      left: 1030px;
+      top:10px;
+      background: #9E9A9A;
+      width:300px;
+      text-align: center;
+      border-radius: 3px;
+      line-height: 20px;
+      z-index: -1
+    }
+    #leval{
+      position: absolute;
+      left:400px;
+      height:335px;
+      z-index: 1000;
+    }
+    strong{
+      color:#f00;
+    }
+    .music{
+      position: absolute;
+      left:1030px;
+      top: 500px;
+    }
+
+  </style>
+</head>
+<body>
+<div class="start">
+  <button>开始游戏</button>
+</div>
+<div class="game" style="display: none">
+  <canvas id="gameCanvas" width="1024" height="670"></canvas>
+  <canvas id="leval" width="500" height="600"></canvas>
+ <!--  <button>暂停</button>
+  <button>开始</button> -->
+</div>
+  <div class="text">
+  <h3>Tips</h3>
+    <p>用挡板接住小球，小球落地游戏结束，一共有四个等级，</p>
+    <p>按<strong>a</strong>键暂停/继续</p>
+    <p>按<strong>s</strong>键重新开始游戏</p>
+    <p>两秒后小球下落</p>  
+  </div>
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=30064292&auto=0&height=66" class="music"></iframe>
+
+  <script src="break.js"></script>
+  <script>
+    var btn =  document.getElementsByTagName('button')[0];
+    var startgame = document.getElementsByClassName("start")[0];
+    var game = document.getElementsByClassName("game")[0];
+    btn.onclick = function(){
+      startgame.style.display="none";
+      game.style.display="block";
+      init();
+    }
+  </script>     
+    
+  
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试专用</title>
+</head>
+<body>
+	<div id="id1">
+		<div id="para">我是标题</div>
+		<p>我是段落</p>
+		<p id="para2"></p>
+		<input type="button" name="" value="replace" id="btn">
+	</div>
+	script:src
+	<script type="text/javascript">
+		function replace(){
+			// alert('dianji');
+			var oid1 = document.getElementById('id1');
+			var para = document.getElementById('para');
+			var para2 = document.getElementById('para2');
+			var newH2 = document.createElement('h2');
+			var newp = document.createElement('p');
+			var texth2 = document.createTextNode("我是新标题");
+			oid1.appendChild(newH2);			//在末尾插入节点
+			newp.appendChild(texth2);
+			oid1.insertBefore(newp,para);		//前面是插入节点
+
+		}
+		document.getElementById('btn').onclick=replace;
+		function wordBlanks(a,b,c,d){
+			var e = a+'&nbsp;'+b+'&nbsp;'+c+'&nbsp;'+d;
+			return e;
+		}
+		document.write(wordBlanks('zhe','ge','ke','yi'));
+	</script>
+</body>
+</html>

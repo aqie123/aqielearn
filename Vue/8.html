@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue1.0自定义指令()</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src="learn/vue-resource.js"></script>
+	<style type="text/css">
+	*{margin:0;padding:0;}
+		.blue{
+			width:100px;
+			height:100px;
+			background-color: blue;
+			line-height: 100px;
+			text-align: center;
+			position: absolute;
+			left:40px;
+			top:40px;
+		}
+		zns-yellow{		/*元素指令		*/
+			width:100px;
+			height:100px;
+			background-color: #eee;
+			display: block;
+			position: relative;
+			top:100px;
+
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<span v-text='a'></span>
+		<span v-red>{{a}}红色</span>
+		<input type="" name="" placeholder="后面文字背景颜色" v-model='b'>
+		<span v-blue='b'>给指令加值：蓝色</span>
+		<span v-green>使用bind：绿色</span>
+
+		<div v-drag :class={blue:true}>啊切你好棒</div>
+
+		<p>元素指令</p>
+		<zns-yellow></zns-yellow>
+
+	</div>
+
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+
+	//添加颜色指令  (属性指令)
+	Vue.directive('red',function(color){	//红色	 默认绑定bind
+		this.el.style.background='red';
+	});
+	Vue.directive('blue',function(color){	//蓝色（这个赋值）
+		// alert(color)
+		this.el.style.background = color;
+	});
+	Vue.directive('green',{		//黄色（这个不赋值可以，使用bind）
+		bind:function(){
+			this.el.style.background = 'green';
+		}
+		
+	});
+
+	//拖拽指令
+	Vue.directive('drag',function(){
+		var oDiv = this.el;						//原生的Dom元素
+		oDiv.onmousedown = function(ev){
+			var disX = ev.pageX-oDiv.offsetLeft;
+			// alert(disX)
+			var disY = ev.pageY-oDiv.offsetTop;
+			//鼠标移动
+			document.onmousemove=function(ev){
+				console.log(ev.pageX);
+				var l = ev.pageX-disX;		//鼠标移动多少，盒子移动多少
+				var t = ev.pageY-disY;
+				oDiv.style.left = l+'px';
+				oDiv.style.top = t+'px';
+				// alert(oDiv.style.top)
+			};
+			//鼠标移开
+			document.onmouseup = function(){
+				// alert(1)
+				document.onmousedown =null;
+				document.onmousemove = null;
+			};
+		}
+	});
+
+	//元素指令(用处不大)
+	Vue.elementDirective('zns-yellow',{		//这个不可以用function
+		bind:function(){
+			this.el.style.background = 'yellow';
+		}
+		
+	});
+		new Vue({
+			el:'#box',
+			data:{
+				a:'aqie',
+				b:'blue',
+			},
+			json:{
+
+			},
+			methods:{
+				
+			},
+			jsonp:function(ev){}
+			
+
+		})
+		Vue.config.devtools = true;
+	</script>
+</body>
+</html>

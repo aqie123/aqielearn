@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>html5基础</title>
+</head>
+<body>
+	<div id="box">
+		<span v-html='a'></span>
+	</div>
+
+	<script type="text/javascript">
+	  var single = {
+		  attr_1: '摸摸达',
+		  privfunc: function() {
+		     console.log(attr_1);
+		  }
+	  
+    }
+    console.log(single.attr_1);
+    console.log(window.performance.timing);		// 性能监控接口
+    // 下面这些在控制台运行
+    new Date().getTime();											// 非html5检测时间
+    window.localStorage.setItem('a','1');
+    window.localStorage.getItem('a');
+
+    setTimeout(function() {				// 经典例子
+    	console.log(1)
+    },0);
+    console.log(2);
+
+    //myWorker
+    var myWorker = new Worker("mytest.js");    // js里不能放ui线程
+    myWorker.onmessage = function (oEvent) {
+    	console.log("Called back by the worker\n");
+    }
+
+    // 跨域
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+    	alert("XML")
+    }
+    xhr.open(url,'GET',false);    // 异步的  ，url需要是同域的(协议是相同的,父域相同，一级二级父域)
+    xhr.send()										// 发送请求
+
+    // 实现跨域
+    header('Access-Control-Allow-Origin:*');    // 设置响应头，*代表所有域
+
+
+    //html5触屏事件详解
+    var body = document.getElementsByTagName('body');
+    body = body[0];
+    body.addEventListener('touchstart',function() {
+    	console.log("start");
+    },false);				// 冒泡
+    body.addEventListener('touchmove',function() {
+    	console.log("move");
+    },false);				// 冒泡
+    body.addEventListener('touchend',function() {
+    	console.log("end");
+    },false);				// 冒泡
+    body.addEventListener('click',function() {
+    	console.log("click");
+    },false);				// 冒泡
+    body.addEventListener('mousedown',function() {
+    	console.log("mousedown");
+    },false);				// 冒泡
+    body.addEventListener('mouseup',function() {
+    	console.log("mouseup");
+    },false);				// 冒泡
+    body.addEventListener('mousemove',function() {
+    	console.log("mousemove");
+    },false);				// 冒泡
+    /*
+    	单击：start-end-mousemove-mousedown-mouseup-click
+    	长按：start-mousemove-mousedown-end
+    	单击移动：start-move-end
+    	长按移动：start-mousemove-mousedown-move-end
+			双击： start-end
+    */
+
+    // 手机端页面陷阱 repaint(页面重绘): 样式改变
+    // reflow(页面回流): 位置改变
+    // 尽量缓存所有可以缓存数据;transform 代替dom操作
+    // 避免给非static定位元素增加css3动画
+    // 适当使用硬件加速GPU处理(eg:canvas绘制图片,transform:translated(0,0,0));
+
+    // pc时代用 Response Headers
+    // html5 ： localStorage(只能存字符串。存对象需要序列化)，
+    // sessionStorage(网页关闭数据清零)
+    // indexedDB(可以存更大量数据，可以加索引)
+    // localStorage.setItem('daya_1',JSON.stringify({a:1}));
+    // localStorage.getItem('daya_1');
+    // 反序列化：JSON.parse(localStorage.getItem('daya_1'));
+
+	</script>
+</body>
+</html>

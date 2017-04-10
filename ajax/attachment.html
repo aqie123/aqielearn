@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ajax无刷新上传附件</title>
+    <script>
+        window.onload = function(){
+            var form = document.getElementsByTagName('form')[0];
+            form.onsubmit = function(evt){
+
+                //1.收集用户输入表单信息   普通表单+上传文件域
+                var formData = new FormData(form);
+                //2.信息提交给服务器端
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState === 4){
+                        alert(xhr.responseText);
+                    }
+                };
+                // 上传进度条
+                xhr.upload.onprogress = function(evt){
+                    // 每隔100ms就执行一次
+                    // console.log(evt);
+                    //已上传大小
+                    var load = evt.loaded;
+                    // 附件总大小
+                    var total =evt.total;
+                    //上传百分比
+                    var percentage = Math.floor((load/total)*100)+"%";
+                    // 给里面内容设置百分比
+                    var solid = document.getElementById('solid');
+                    solid.style.width=percentage;
+                    solid.innerHTML=percentage;
+                };
+
+                xhr.open('post','./attachment.php');
+
+                // FormData 无需调用下面方法
+                // xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+//                console.log(formData);return;
+                console.log(xhr);
+                xhr.send(formData);
+                // 阻止浏览器默认表单提交
+                evt.preventDefault();
+                //3.
+            }
+        }
+    </script>
+    <style>
+        #progressbar{
+            width:460px;
+            height:40px;
+            border:2px solid blue;
+        }
+        #solid{
+            width:0%;
+            height:100%;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+
+<form action="" enctype="multipart/form-data">
+    <p>用户名：<input type="text" name="username" /></p>
+    <p>密码：<input type="password" name="password" /></p>
+    <p>邮箱：<input type="text" name="email" /></p>
+    <p>头像：<input type="file" name="avatar" /></p>
+    <div id="progressbar">
+        <div id="solid"></div>
+    </div>
+    <p><input type="submit" value="提交"></p>
+</form>
+<script>
+    /*
+    dom方式只能手机普通的表单信息
+    $_FILES(name,error,size,type,tmp_name)
+    move_uploaded_file(临时路径,真实附件路径)
+    */
+</script>
+</body>
+</html>

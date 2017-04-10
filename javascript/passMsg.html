@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    textarea{
+      width: 175px;
+      height:100px;
+    }
+  </style>
+</head>
+
+<!-- <frameset cols="30%,30%,30%">
+  <frame src= "1.html" name="frame1" id="frame1"></frame>
+  <frame src= "4.html" name="frame1" id="frame2"></frame>
+  <frame src= "3.html" name="frame1" id="frame3"></frame>
+</frameset> -->
+<body>
+<form action="test1.html" name ="form1" onsubmit="return true">
+  <textarea></textarea>
+  
+  <input type="hidden" name="msg" value="">
+  <button>提交</button>
+  <br>
+  <input type="" name="count" value="">
+</form>
+</body>
+  
+<script type="text/javascript">
+  // var frame3 = document.getElementById('frame3');
+  // frame3.style.display="none";
+  var btn = document.getElementsByTagName('button')[0];
+  var tara = document.getElementsByTagName('textarea')[0];
+  var count = document.getElementsByTagName('input')[1];
+  var input = document.form1.msg.value;
+  function getmsg(){
+    var str = tara.value;
+    str = getLength(str);
+
+    return str>20 ? '页面字数超过20' : '页面字数小于等于20';
+  }
+  btn.onclick = function(){
+    // alert(getmsg());
+    // alert(input);
+    document.form1.msg.value = getmsg();
+  }
+
+  function getLength(str){  //获取字符串长度
+    return str.replace(/[^\x00-xff]/g,"xx").length;
+  }
+  tara.onkeyup=function(){
+    var str = tara.value;
+    count.value = getLength(str);
+  }
+</script>
+</html>

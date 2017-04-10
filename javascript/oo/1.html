@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>oo</title>
+</head>
+<body>
+	
+</body>
+<script src="1.js"></script>
+<script type="text/javascript">
+/*
+	alert(aqie);
+	console.log(typeof(aqie));
+	var a = 0;
+	function aqie(){
+		console.log(a);
+		var a = 5;  //预处理阶段，a存在，但值为undefined
+
+	}
+	var aqie = 1;
+	// aqie();
+	// 
+	// 函数声明冲突会覆盖
+	// 变量冲突函数名会忽略（预处理）
+*/
+
+/*
+	function f(a,b){   //预处理阶段 a=1,b=2
+		alert(a);
+		alert(b);
+		var b = 100;
+		function a(){
+
+		}
+	}
+	f(1,2);
+*/
+
+/*
+function f(){
+	function f1(){
+		b = 1;      //b最后成为window的成员，没有用var声明，变为最外部成员
+	}
+	f1();
+}
+f();
+*/
+
+/*作用域，会忽略if()
+alert(a);    //undefined
+alert(b);	 //undefined
+alert(c);   //没有定义
+alert(d);   //没有定义
+var a =1;
+if(false){
+	var b = 2;
+}else{ 
+	c = 3;
+}
+function f(){
+	var d = 4;   //d是属于f的，不会到window里面去
+}
+*/
+//块作用域，函数作用域，动态作用域，词法作用域
+//js没有块作用域概念
+
+// js不存在动态作用域 
+function f(){
+	alert(x);
+}
+
+function f1(){
+	var x = 5;  //运行时确定
+	f();
+}
+f1();
+
+//静态作用域（词法作用域或闭包）
+</script>
+</html>

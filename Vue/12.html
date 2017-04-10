@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue1.0动态组件+父子组件</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src="learn/vue-resource.js"></script>
+</head>
+<body>
+	<div id="box">
+		<span v-html='msg'></span>
+
+		<button @click="a='aaa'">aaa组件</button>
+		<button @click="a='bbb'">bbb组件</button>
+		<hr style="height:1px;border-top:2px dotted #f00;">
+		<!-- 组件切换 -->
+		<component :is="a">		
+		</component>
+		<hr style="height:1px;border-top:2px dotted #f00;">
+
+
+		<bbb></bbb>
+		<hr style="height:1px;border-top:2px dotted #f00;">
+		<p>这个可以扩展，做模板</p>
+		<p>Vue默认情况下，子组件不能访问父组件数据</p>
+		<p>组件数据通信</p>
+	</div>
+		<!-- 模板数据 -->
+		<template id="aaa">
+			<h3>我是父组件aaa,->{{msg}}</h3>
+			<hr style="height:1px;border-top:1px #ff0 solid;">
+			<ccc :m='msg' :my-msg='msg2'></ccc>
+		</template>
+		<template id="bbb">
+			<h3>我是父组件bbb</h3>->{{msg}}
+			<br>
+			<hr style="height:1px;border-top:1px #ff0 solid;">
+			<ddd @child-msg="get"></ddd>
+		</template>
+		<template id="ddd">
+			<h4>我是ddd，我是b的子组件->{{d}}</h4>
+			<button @click="send">send</button>
+		</template>
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:'#box',
+			data:{
+				msg:'动态组件：实现组件切换<br />',
+				a:'aaa',
+			},
+			events:{},			//广播完数据存放位置
+			components:{
+				'aaa':{
+					data(){
+						return{
+							msg:'我是父组件a数据',
+							msg2:'我是父级a多个数据,驼峰'
+						}
+					},
+					template:'#aaa',
+					components:{			//子组件集合
+						'ccc':{
+							props:['m','my-msg'],				//推荐用数组形式//json格式																
+							template:'<h4>我是ccc,我是a的子组件->(m是随意起的){{m}}<br>	{{myMsg}}</h4>'
+						}
+					}
+				},
+				'bbb':{
+					data(){
+						return{
+							msg:'我是父组件b数据'
+						}
+					},
+					methods:{
+						get(data){				//这个参数就是数据
+							// alert("点击send触发这个函数")
+							// alert(data)	
+							this.msg = data;
+						}
+					},
+					template:'#bbb',
+					components:{
+						'ddd':{
+							data(){
+								return{
+									d:'我是子组件数据d'
+								}
+							},
+							template:'#ddd',
+							methods:{
+								send(){
+									// alert('把数据发送到父级')
+									this.$emit('child-msg',this.d);		//把数据发送出去
+								}
+							}
+						}
+					}
+				},
+			}
+			
+
+		})
+		Vue.config.devtools = true;
+		// vm.$emit(事件名称，数据)
+		//v-on接收数据 简写为@
+
+		//vm.$dispatch(事件名，数据);子级向父级发送数据
+		//vm.$broadcast(事件名，数据);父级向子级传递数据  ps:需要配合event
+		//在vue2.0这两个已经淘汰了、了
+	</script>
+</body>
+</html>

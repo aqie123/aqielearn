@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#box{
+			width:100px;
+			height:100px;
+			background: #EC0EB8;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<input type="button" name="" id="btn" value="按钮" class="btn">		
+	</div>
+	<input type="button" name="" class="btn" value = "计数">
+	<a href="http://www.phpfamily.org" class="alink">King</a>
+	<a href="http://hanshunping.blog.51cto.com/7532264/1250209" class="alink">韩顺平</a>
+	<img src="picture/viewphoto.jpg" alt="" class="img" width="100px" height="130px">
+
+
+<script type="text/javascript">
+var obtn = document.getElementsByClassName('btn');
+var obox = document.getElementById('box');
+var alink = document.getElementsByClassName("alink");
+var img = document.getElementsByClassName('img');
+var count = 0;
+function cancel(e){
+	var e = e||window.event;
+	// w3c取消冒泡e.stopPropagation();	
+	//ie 取消e.cancelBubble = true;
+	if(typeof e.cancelBubble == 'undefined'){   //取消冒泡还是会影响其他文件
+		e.stopPropagation();
+	}else{
+		e.cancelBubble = true;
+	}
+}
+function test(){
+		obox.onclick = function(){
+		alert("我是外面div");
+	}
+	document.body.onclick = function(){
+		alert("我是body");
+	}
+	document.documentElement.onclick = function(){
+		alert("html click")
+	}
+	document.onclick = function(){
+		alert("document click")
+	}
+}
+function test1(bool){
+	obox.addEventListener('click',function(e){
+		e.preventDefault();   //阻止不了当前函数事件
+		alert('点击盒子')
+	},bool);
+	document.body.addEventListener('click',function(ev){
+		alert('点击body')
+		alert(ev.eventPhase);
+	},bool);
+	document.documentElement.addEventListener('click',function(){
+		alert('点击html')
+	},bool);
+	document.addEventListener('click',function(){
+		alert('点击document')
+	},bool); 
+}
+function handel(){    //弹出数字
+	alert(count++);
+	if(count == 3){
+		alert("事件被取消");
+		obtn[1].removeEventListener('click',handel,false);
+	}
+	cancel();
+}
+var EventUtil={
+	//检测绑定事件  取消冒泡，取消默认行为。。。。。
+	addHandeler:function(element,type,handeler){
+		if(element.addEventListener){
+			element.addEventListener(type,handeler,false);  //只考虑冒泡阶段
+		}else if(element.attachEvent){
+			element.attachEvent('on'+type,handeler);
+		}else{
+			element['on'+type] = handeler;  //使用dom0.脚本模型
+		} 
+	},
+	//移除事件
+	removeHandeler:function(element,type,handeler){
+		if(element.removeEventListener){
+			element.removeEventListener(type,handeler,false);
+		}else if(element.detachEvent){
+			element.detachEvent('on'+type,handeler);
+		}else{
+			element['on'+type] = null;
+		}
+	},
+	//获取事件
+	getEvent:function(event){
+		return event?event:window.event;
+	},
+	//得到目标
+	getTarget: function(event){
+		return event.target||event.srcElement;
+	},
+	//取消默认行为
+	preventDefault:function(event){
+		if(event.preventDefault){
+			event.preventDefault();
+		}else{
+			event.returnValue = false;
+		}
+	},
+	//取消冒泡
+	stopPropagation:function(event){
+		if(event.stopPropagation){
+			event.stopPropagation();
+		}else{
+			event.cancelBubble = true;
+		}
+	}
+}
+function aqie(ev){
+	alert("这是封装函数，你好啊切");
+	// alert(ev.type)
+	// alert(this.tagName);
+	// alert(ev.currentTarget);  //this ===ev.currentTarget
+	// alert(ev.target);
+	alert(ev.eventPhase);  //在事件冒泡是3，捕获是1，事件目标对象上是2
+	alert(window.event.srcElement === this);
+	alert(ev.srcElement === this); 
+	cancel();        // 取消冒泡
+}
+function aqie1(){
+	EventUtil.removeHandeler(obox,'click',aqie);
+}
+//封装
+EventUtil.addHandeler(obox,'click',aqie);   //给盒子添加事件
+/*
+obox.attachEvent('onclick',function(event){     //给盒子添加ie事件
+
+	alert(event.srcElement === this);   //ie中不相等
+	alert(window.event.srcElement === this);
+})*/
+EventUtil.addHandeler(obtn[1],'click',aqie1);  //点击按钮2会移除box事件
+
+function handel1(e){
+	switch(e.type){
+		case 'click':
+			alert("你点到我了");
+			break;
+		case 'mouseover':
+			event.target.style.backgroundColor = 'red';
+			break;
+		case 'mouseout':
+			event.target.style.backgroundColor = '';
+			break;
+	}
+}
+
+
+</script>
+<!-- <script src="js/4.js"></script> -->
+<script src="js/5.js"></script>	
+</body>
+</html>

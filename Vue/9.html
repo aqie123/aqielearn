@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue1.0自定义键盘信息</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src="learn/vue-resource.js"></script>
+</head>
+<body>
+	<div id="box">
+		<span v-text='a|json'></span>
+		<input type="" name="" @keydown.ctrl="show">
+
+		<p>数据监听</p>
+		<span>{{b}}</span><br>
+		<span>{{b2}}</span>
+
+	</div>
+
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		Vue.directive('on').keyCodes.ctrl = 17;
+		//相当于给17起了个名字叫ctrl
+		var vm = new Vue({
+			el:'#box',
+			data:{
+				a:{name:'aqie',age:25},
+				b:2,
+				b2:0,
+			},
+			json:{
+
+			},
+			methods:{
+				show:function(ev){
+					alert(ev.keyCode)
+				}
+			},
+			jsonp:function(ev){}
+			
+
+		})
+		Vue.config.devtools = true;
+		//vm.$el/$mount/$options...$watch(name,fncb)  浅度监视
+		//vue组件  类似元素指令
+		//ctrl->17;
+		document.onkeydown=function(ev){ 
+			// alert(ev.keyCode)
+		};
+		vm.$watch('a',function(){
+			alert('a值变化了');
+			// this.b=this.a+':'+'13081801163';
+		},{deep:true})							//深度监视
+		document.onclick=function(){
+			vm.a.name ='aqie123';
+		}
+	</script>
+</body>
+</html>

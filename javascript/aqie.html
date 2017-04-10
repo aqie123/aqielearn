@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+
+
+<script type="text/javascript">
+  
+
+  function add(n)
+  {
+    return n<2 ? 1: (n+add(n-1));
+  }
+
+  var num = window.prompt("请输入要计算前n项和的n");
+  function Fuc()
+  {
+    
+    if(!isNaN(num)){    // 是数字
+      // console.log(add(Number(num)));
+      return add(Number(num));
+    }else{
+      return false;
+    }
+
+  }
+  var msg = Fuc();
+  if(msg){
+    alert("从1加到"+num+"和是"+msg);
+  }else{
+    alert('请输入数字');
+  }
+
+
+
+</script>
+  
+</body>
+</html>

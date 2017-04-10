@@ -1,0 +1,20 @@
+src是文件存放的主题目录
+
+一：实现响应式图片
+1. js或服务器端
+2. srcset
+3.srcset配合sizes
+4.picture
+5.svg
+
+二：事件驱动
+    用事件触发调用相应方法
+
+三：非阻塞式I/O模型
+    读取文件和调用回调函数(提高资源利用率)
+
+四：主流响应式框架
+    Bootstrap
+    Foundation
+    Semantic UI
+    PureCss

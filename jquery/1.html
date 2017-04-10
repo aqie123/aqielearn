@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link href="../public/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../public/css/libs/jquery-ui.min.css">
+	<style type="text/css">
+		.square{
+			width:200px;
+			height:200px;
+			background: #F115E1;
+			float: left;
+		}
+		/*.square:after{
+			clear:both;
+		}*/
+		.square1{
+			clear: both;
+			width:200px;
+			height:200px;
+			background:#0DD3FC;
+
+		}
+		.square2{
+
+			width:200px;
+			height:200px;
+			background:#0519FC;
+			float: left;
+		}
+		.drop{
+			border:1px dashed black;
+		}
+		.droppable-active{
+			border:1px solid red;
+		}
+		.droppable-hover{
+			background: #0CF63B;
+		}
+		.box1{
+			float:left;
+			width:272px;
+			height:272px;
+			border:1px solid;
+		}
+		.sort{
+			width:90px;
+			height:90px;
+			background:#55085D;
+			float:left;
+			border:1px solid #B2F905;
+			color:#fff;
+		}
+		.ui-selected{
+			background: #FD5F05;
+		}
+		.box2{
+			float: left;
+			width:272px;
+			height:272px;
+			border:1px solid;
+			background: #174C0B;
+		}
+		.accordion{
+			clear:both;
+			margin: 0 auto;
+			width:60%;
+			/*height:700px;*/
+		}
+	</style>
+</head>
+<body>
+    <!-- <span class="square"></span> 行内元素没有宽高-->
+	<!-- <div class="box clearfix"> -->
+		<div class="square"></div>
+     <!-- </div> -->
+	<div class="square1"></div>
+	<div class="square2 "></div>
+	<div class="box1">
+		<div class="sort">1</div>
+		<div class="sort">2</div>
+		<div class="sort">3</div>
+		<div class="sort">4</div>
+		<div class="sort">5</div>
+		<div class="sort">6</div>
+		<div class="sort">7</div>
+		<div class="sort">8</div>
+		<div class="sort">9</div>
+	</div>
+	<div class="box2"></div>
+	<div class="dialog" title="乌鸦作品欣赏">
+		<p>那柔软 暗淡 飒飒飘动的每一块紫色窗布
+			使我心中充满前所未有的恐怖 我毛骨惊然
+			为平息我心儿停跳 我站起身反复叨念
+			“这是有人想进屋 在叩我的房门
+			更深夜半有人想进屋 在叩我的房门
+			唯此而已 别无他般”
+			很快我的心变得坚强 不再犹疑 不再彷徨</p>
+	</div>
+	<div class="accordion">
+		<h3>Section 1</h3>
+		<p>Once upon a midnight dreary, while I pondered weak and weary,
+		Over many a quaint and curious volume of forgotten lore,
+		While I nodded, nearly napping, suddenly there came a tapping,
+		As of some one gently rapping, rapping at my chamber door.
+		`'Tis some visitor,' I muttered, `tapping at my chamber door -
+		Only this, and nothing more.'
+		Ah, distinctly I remember it was in the bleak December,
+		</p>
+		<h3>Section 2</h3>
+		<p>And each separate dying ember wrought its ghost upon the floor.
+		Eagerly I wished the morrow; - vainly I had sought to borrow
+		From my books surcease of sorrow - sorrow for the lost Lenore -
+		For the rare and radiant maiden whom the angels named Lenore -
+		Nameless here for evermore.
+		</p>
+		<h3>Section 3</h3>
+		<p>And the silken sad uncertain rustling of each purple curtain
+		Thrilled me - filled me with fantastic terrors never felt before;
+		So that now, to still the beating of my heart, I stood repeating
+		`'Tis some visitor entreating entrance at my chamber door -
+		Some late visitor entreating entrance at my chamber door; -
+		This it is, and nothing more,'
+		</p>
+	</div>
+	<div class="slider"></div>
+	<table id="myTable" class="tablesorter"> 
+		<thead> 
+		<tr> 
+		    <th>Last Name</th> 
+		    <th>First Name</th> 
+		    <th>Email</th> 
+		    <th>Due</th> 
+		    <th>Web Site</th> 
+		</tr> 
+		</thead> 
+		<tbody> 
+		<tr> 
+		    <td>Smith</td> 
+		    <td>John</td> 
+		    <td>jsmith@gmail.com</td> 
+		    <td>$50.00</td> 
+		    <td>http://www.jsmith.com</td> 
+		</tr> 
+		<tr> 
+		    <td>Bach</td> 
+		    <td>Frank</td> 
+		    <td>fbach@yahoo.com</td> 
+		    <td>$50.00</td> 
+		    <td>http://www.frank.com</td> 
+		</tr> 
+		<tr> 
+		    <td>Doe</td> 
+		    <td>Jason</td> 
+		    <td>jdoe@hotmail.com</td> 
+		    <td>$100.00</td> 
+		    <td>http://www.jdoe.com</td> 
+		</tr> 
+		<tr> 
+		    <td>Conway</td> 
+		    <td>Tim</td> 
+		    <td>tconway@earthlink.net</td> 
+		    <td>$50.00</td> 
+		    <td>http://www.timconway.com</td> 
+		</tr> 
+		</tbody> 
+    </table> 
+
+
+	<script src="../public/js/libs/jquery-3.1.1.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../public/js/plug/jquery-ui.min.js"></script>
+    <script src="../public/js/plug/jquery.tablesorter.js"></script>
+    <script type="text/javascript">
+    	//alert($)
+    	$(function(){
+    		$(".square").click(function(){  //动画特效
+    			$(this).hide(1100).show(2000);
+    			
+    		});
+    		$('.square1').draggable({helper:'clone',opacity:0.5});
+
+    		$(".square2").droppable({//回收站
+    			accept:'.square1',
+    			activeClass:'droppable-active',
+    			hoverClass:'droppable-hover',
+    			drop:function(ev,ul){
+    				$(this).append('<br>Dropped!');
+    				$(".square1").remove();
+    			}
+    		});
+
+            // $(".box1").sortable().selectable();//拖拽排序
+            $(".box1").selectable(); //可选择
+            $(".box2").resizable(); //可调节大小
+            $(".accordion").accordion({collapsible:true,active:0});//可折叠
+ 			$(".dialog").dialog();  //对话框
+ 			$(".slider").slider({step:25});
+ 			$(".slider").on("slidechange",function(event,ui){
+ 				debugger;
+ 			});
+ 			$("#myTable").tablesorter(); 
+ 			
+   			
+       			 	
+    		
+			
+    	});
+    </script>
+</body>
+</html>

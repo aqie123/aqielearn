@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue1.0 单页面--路由+多层路由</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src="learn/vue-resource.js"></script>
+	<script src="vue1.0/vue-router.js"></script>
+	<style type="text/css">
+		.v-link-active{
+			font-size: 20px;
+			color:#f60;
+		}
+		a:focus{
+			color:#f00;
+			text-decoration: none;
+		}
+		ul{
+			width:100%;
+			height: 60px;
+			line-height: 60px;
+		}
+		li{
+			float: left;
+			list-style: none;
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<span v-html='a'></span>
+		<ul>
+			<li><a v-link="{path:'/home'}">主页</a></li>
+			<li><a v-link="{path:'/news'}">新闻</a></li>
+		</ul>
+		<div>
+			<router-view></router-view>
+		</div>
+	</div>
+	
+	<template id="home">
+		<h3>我是主页</h3>
+		<div>
+			<a href="#" v-link="{path:'/home/login'}">登录</a>
+			<a href="#" v-link="{path:'/home/reg'}">注册</a>
+		</div>
+		<div>
+			<router-view></router-view>
+		</div>
+	</template>
+
+	<template id="news">
+		<h3>我是新闻</h3>
+		<div>
+			<a href="#" v-link="{name:'detail',params:{id:'01'}}">新闻001</a>
+			<a href="#" v-link="{name:'detail',params:{id:'02'}}">新闻002</a>
+		</div>
+		<router-view></router-view>
+	</template>
+
+	<template id="login">
+		<h4>恭喜你登陆成功！</h4>
+	</template>
+
+	<template id="reg">
+		<h4>请您填写登陆信息！</h4>
+		<p>vue->component->template</p>
+	</template>
+
+	<template id="detail">
+		{{$route.params |json}}
+		<br>
+		路由名称：{{$route.name}}
+		<br>
+		路径：{{$route.path}}
+		<br>
+		数据查询：{{$route.query | json}}
+	</template>
+
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		// 1.准备一个根组件
+		var App = Vue.extend();
+
+		// 2.home news组件都准备 
+		var Home =Vue.extend({
+			template:'#home',
+		});
+		var News =Vue.extend({
+			template:'#news'
+		});
+
+		var Detail = Vue.extend({		//新闻下面组件
+			template:'#detail'
+		});
+		// 3.准备路由
+		var router = new VueRouter();
+
+		// 4.进行关联
+		router.map({			//这里面包含两个组件
+			'home':{
+				component:Home,
+				subRoutes:{
+					'/login':{
+						component:{
+							template:'#login'
+						}
+					},
+					'reg':{
+						component:{
+							template:'#reg'
+						}
+					}
+				}
+			},
+			'news':{
+				component:News,
+				subRoutes:{
+					'/details/:id':{		//拿到id做一些事情
+						name:'detail',		//具名路由映射
+						component:Detail
+					}
+				}
+			}
+		});		
+		// 5.启动路由
+		router.start(App,'#box');
+
+		//6.跳转
+		router.redirect({
+			'/':'/home'			//访问根目录到主页跳转
+		})
+
+
+		Vue.config.devtools = true;
+	</script>
+</body>
+</html>

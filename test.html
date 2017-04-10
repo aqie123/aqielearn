@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		.box{
+			height: 300px;
+			background: red;
+			width: 20px;
+			line-height: 300px;
+		}
+		.label	{
+			width: 20px;
+			display: inline-block;
+			line-height: 200%;
+			font-size: 20px;
+			vertical-align:middle;
+			background-color: yellow;
+		}
+		#show{
+			width: 400px;height:100px;border:1px solid red;
+			overflow: auto;
+		}
+	</style>
+</head>
+<body>
+<input type="" name="" class="shuru">
+<button class="btn"> shuzi</button>
+<div>
+	<div class="list ">
+		<div class="mt">aaa</div>
+	</div>
+	<div class="list">
+		<input type="text" class="wenzi" />
+		<p>北京</p>
+	</div>
+</div>
+<button onclick="demo.test()">按钮1</button>
+<button onclick="demo.test()">按钮2</button>
+<!-- <iframe src="index.html" frameborder="0" id='i' width="100%" height="250px" scrolling="no">点击切换</iframe> -->
+
+<div class="box">
+	<div class="label">教育是</div>
+</div>
+<div id="show">
+	<br>3
+	<br>
+	<br>
+	<br>3
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>3
+	<br>
+	<br>
+	<br>
+	<br>3
+	<br>
+	<br>
+	<br>3
+	<br>
+</div>
+	
+
+ <script src="public/js/libs/jquery-3.1.1.min.js"></script>
+ <script type="text/javascript">
+// 设置滚动条
+	$("#show").scrollTop(300);
+
+ 	var a=b=c=0;
+ 	$(".btn").click(function(){
+ 		var num = $(".shuru").val();
+ 		a=parseInt(num.slice(0,1));
+ 		b=parseInt(num.slice(1,2));
+ 		c=parseInt(num.slice(2,3));
+ 		alert(test(a,b,c));
+ 	})
+ 	function test(){
+	  var paramsNum=arguments.length;
+	  var sum = 0;
+	  for(var i=0;i<paramsNum;i++){
+	    sum+=arguments[i];
+	  }
+	  return sum;
+    }
+
+ 	// $("#i",parent.document.body).attr("src","http://www.baidu.com")	;
+ 	var demo = this;
+ 	demo.test=function(){
+ 		alert('你在点我')
+ 	}
+ </script>
+ <script>
+$(function(){
+	var EventUtil = {
+	  
+	 // 添加事件监听 
+	 add: function(element, type, callback){
+	   
+	  if(element.addEventListener){
+	   element.addEventListener(type, callback, false);
+	  } else if(element.attachEvent){
+	   element.attachEvent('on' + type, callback);
+	  } else {
+	   element['on' + type] = callback;
+	  }
+	 },
+	 
+	 // 移除事件监听
+	 remove: function(element, type, callback){
+	   
+	  if(element.removeEventListener){
+	   element.removeEventListener(type, callback, false);
+	  } else if(element.detachEvent){
+	   element.detachEvent('on' + type, callback);
+	  } else {
+	   element['on' + type] = null;
+	  }
+	 
+	 },
+	 
+	 // 跨浏览器获取 event 对象
+	 getEvent: function(event){
+	  
+	  return event ? event : window.event;
+	 },
+	 
+	 // 跨浏览器获取 target 属性
+	 getTarget: function(event){
+	   
+	  return event.target || event.srcElement;
+	 },
+	 
+	 // 阻止事件的默认行为
+	 preventDefault: function(event){
+	  
+	  if(event.preventDefault){
+	   event.preventDefault();
+	  } else {
+	   event.returnValue = false;
+	  }
+	 },
+	 
+	 // 阻止事件流或使用 cancelBubble
+	 stopPropagation: function(){
+	   
+	  if(event.stopPropagation){
+	   event.stopPropagation();
+	  } else {
+	   event.cancelBubble = true;
+	  }
+	 }
+	 
+	};
+	$('.wenzi').click(function(event){
+		// EventUtil.preventDefault(event);   阻止默认行为
+		EventUtil.stopPropagation(event);
+	})
+	
+	$('.list').click(function(){
+		
+		if(!$(this).hasClass('selected')){
+			$(this).parent().find('.list').each(function(){
+				$(this).css('background-color','yellow');
+				$(this).addClass('selected');
+				// var value=$('.mt').val();
+				$(this).find('p').text("abc");
+				$(this).find('input').attr('value','啊切');
+			});
+			
+		}else{
+			console.log();
+			$(this).parent().find('.list').each(function(){
+				$(this).css('background-color','red');
+				$(this).children('input').attr('value','');
+				$(this).removeClass('selected');
+			});
+		}	
+	});
+
+});
+
+/*animate加了时间会像用setTimeout一样，是异步执行的。
+你在执行each里代码的时候只是类似于开了另一个进程去执行这个动画，然后下面的修改left的代码是立马执行的，
+.animate({ scrollTop:( ($(window).height()) * 4 ) },400,"swing",function(){ direct=0;sex=1;}
+*/
+
+
+
+
+
+function f1(a){
+	return a;
+}
+function f1(a,b){
+	return a*b;
+}
+function f1(a,b,c){
+	return a*b*c;
+}
+
+console.log(f1(2,3,4));		// 三个乘积
+console.log(f1(2,3))     // 两个乘积
+</script>
+
+
+	
+</body>
+</html>

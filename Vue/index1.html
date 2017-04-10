@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue1.0微博</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<link href="css/weibo.css" rel="stylesheet" type="text/css" />
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src="learn/vue-resource.js"></script>
+</head>
+<body>
+
+	<div class="znsArea">
+	<!--留言-->
+	     <div class="takeComment">
+	        <textarea name="textarea" class="takeTextField" id="tijiaoText" v-model="t1"></textarea>
+	        <div class="takeSbmComment">
+	            <input type="button" class="inputs btn" value="" @click='add()'/>
+	            <span>(可按 Enter 回复)</span>
+	        </div>
+	    </div>
+
+	</div>
+
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		// var URL = '3.php';
+		new Vue({			
+			el:'.znsArea',
+			data:{				//vue的属性，数据
+				t1:'',
+			},
+			methods:{
+				add:function(){
+					alert(1);					
+					//发送请求
+					this.$http.get('3.php',{
+							act:'add'
+
+					}).then(function(res){
+						// console.log(res.data);
+						alert(res.data)
+					},function(){
+						alert(res.status)
+					});
+				}
+				
+			}
+
+		});			//vue结束
+		Vue.config.devtools = true;
+	</script>
+</body>
+</html>

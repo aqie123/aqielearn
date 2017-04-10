@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui">
+	<meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" type="text/css" href="fonts/iconfont.css">
+  <link rel="stylesheet" href="css/reader.css">
+
+	<title>html5阅读器</title>
+	<style type="text/css">
+		.aqie {
+		}
+	</style>
+</head>
+<body>
+	<div id="root" class="container">
+		<div class="m-artical-action">
+			<div class="artical-action-middle" id="action_mid"></div>
+		</div>
+		<div id="top-nav" class="top-nav" style="display: none">
+			<div class="iconfont icon-back"></div>
+			<div class="nav-title">返回书架</div>
+		</div>
+		<div id="fiction_chapter_title"></div>
+		<div id="fiction_container" class="m-read-content">
+
+		</div>
+			<!-- 分页按钮 -->
+			<div class="m-button-bar">
+				<ul class="u-tab">
+					<li id="prev_button">上一章</li>
+					<li id="next_button">下一章</li>
+				</ul>
+			</div>
+			<div id="font-set" style="display: none">
+				<!-- 弹出设置层	 -->
+				<!-- 背景 -->
+				<div class="nav-pannel-bk"></div>
+				<div class="nav-pannel" id="font-container">
+					<div class="child-mod">
+						<span>字号</span>
+						<button id="large-font" class="font-size-button">大</button>
+						<button id="small-font" class="font-size-button">小</button>
+					</div>
+					<div class="child-mod setcolor">
+						<span>背景</span>
+						<div class="bk-container">
+							<div class="bk-container-current"></div>
+						</div>
+						<div class="bk-container">
+							<div class="bk-container-current"></div>
+						</div>
+						<div class="bk-container">
+							<div class="bk-container-current"></div>
+						</div>
+						<div class="bk-container">
+							<div class="bk-container-current"></div>
+						</div>
+						<div class="bk-container">
+							<div class="bk-container-current"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 底部设置 -->
+			<div class="bottom_nav" style="display: none">
+				<div class="nav-setting-bk bottom_nav">
+				</div>
+				<ul class="settings">
+					<li class="iconfont icon-mulu"></li>
+					<li class="iconfont icon-icon-yxj-font" id="font-button"></li>
+					<li class="iconfont icon-yueliang" id="night-button"></li>
+				</ul>
+			</div>
+	</div>
+
+	<script src="lib/zepto.min.js"></script>
+	<script>
+		window.jQuery = $;
+	</script>
+	<script src="js/jquery.base64.js"></script>
+	<script src="js/jquery.jsonp.js"></script>
+	<script type="text/javascript">
+		(function() {
+			var Util =(function() {
+				var prefix = 'html5_reader_';
+				var StorageGetter = function(key) {
+					return localStorage.getItem(prefix + key);
+				}
+				var StorageSetter = function(key,value) {
+					return localStorage.setItem(prefix + key,value);
+				}
+
+				
+				var getBSONP = function(url,callback){
+					return $.jsonp({					// 插件
+						url :url,
+						cache:true,
+						callback:'duokan_fiction_chapter',						// 请求数据是回调函数，当做js执行
+						success : function(result){							// 就是里面字符串
+							// debugger															// 打断点
+							var data = $.base64.decode(result);		// 解码
+							var json = decodeURIComponent(escape(data));
+
+							callback(json);
+						}
+					})
+				}
+
+				return {
+					StorageGetter : StorageGetter,
+					StorageSetter : StorageSetter,
+					getBSONP :getBSONP
+				}
+			})();
+			var Dom  = {		
+				top_nav : $('#top-nav'),												// 头部面板
+				bottom_nav: $('.bottom_nav'),    							// 底部设置面板
+				night_day_switch_button: $('#night-button'), //月亮字体按钮
+				font_set: $('#font-set'),						  // 字体调整面板
+				font_button:$('#font-button'),			// 字体按钮
+
+			}
+			var Win = $(window);
+			var Doc = $(document);
+			var oBody = $('body');
+			var readerModel,readerUI;
+			var RootContainer = $('#fiction_container');
+
+			// 获取保存字体大小
+			var initFontSize = Util.StorageGetter('font-size');
+			initFontSize = parseInt(initFontSize);
+			if(!initFontSize) initFontSize = 14;
+			RootContainer.css('font-size',initFontSize);
+
+			// 获取保存页面背景
+			var bgcolor = Util.StorageGetter('background-color');
+			// bgcolor = parseInt(bgcolor);
+			if(!bgcolor) {
+			 bgcolor = '#e9dfc7';
+			 // alert('没有取到')
+			}
+			oBody.css('background-color',bgcolor);
+
+			function main() {
+				// todo 整个项目入口函数
+				Eventhander();				// 基本事件交互
+				readerModel = ReaderModel();				// 获取数据
+				readerUI = ReaderBaseFrame(RootContainer);
+				readerModel.init(function(data){
+					readerUI(data);
+				});
+			}
+
+			function ReaderModel() {
+				// todo 实现和阅读器相关数据交互
+				var Chapter_id;
+				var ChapterTotal;
+				var init = function(UIcallback) {
+					getFictioninfo(function(){
+						getCurChapterContent(Chapter_id,function(data){
+							// todo
+							UIcallback && UIcallback(data);
+						})
+					})
+				}
+				var getFictioninfo = function(callback) {
+					$.get('data/chapter.json',function(data){
+						// todo 获得章节信息的回调
+						Chapter_id = Util.StorageGetter('last_chapter_id');						// 从本地获得id, 获取成功
+
+						if(!Chapter_id) {
+							Chapter_id = data.chapters[1].chapter_id;
+							alert("没有获取到Chapter")
+						}
+						
+						ChapterTotal = data.chapters.length;
+						// alert(ChapterTotal);    //270
+						callback && callback();
+
+					},'json');
+				}
+				var getCurChapterContent = function(chapter_id,callback){			// 获得当前章节内容
+					$.get('data/data'+Chapter_id+'.json',function(data){
+						if(data.result == 0){							// 数据为0是ok的
+							var url = data.jsonp;
+							Util.getBSONP(url,function(data){				// (地址，回调，用于渲染数据)
+								// debugger;
+								callback && callback(data);						// callback 数据传出去
+							});
+						}
+					},'json')
+				}
+				// 上一页
+				var prevChapter = function(UIcallback){
+					Chapter_id = parseInt(Chapter_id,10);
+					if(Chapter_id == 1){
+						return;
+					}
+					Chapter_id-=1;
+					console.log(Chapter_id);
+					getCurChapterContent(Chapter_id,UIcallback);
+					// alert(0)
+					Util.StorageSetter('last_chapter_id',Chapter_id);
+					// aqie = Util.StorageGetter('last_chapter_id');					// 存储读取没问题
+					// alert(aqie)
+				}
+				// 下一页
+				var nextChapter = function(UIcallback){
+					Chapter_id = parseInt(Chapter_id,10);
+					if(Chapter_id == 4){
+						return;
+					}
+					Chapter_id+=1;
+					console.log(Chapter_id);
+					getCurChapterContent(Chapter_id,UIcallback);
+					Util.StorageSetter('last_chapter_id',Chapter_id);
+					// aqie = Util.StorageGetter('last_chapter_id');
+					// alert(aqie)
+				}
+
+				return {
+					init : init,										//暴露接口
+					prevChapter:prevChapter,
+					nextChapter:nextChapter
+				}
+			}
+
+			function ReaderBaseFrame(container) {
+				// todo 渲染基本UI结构
+				function parseChapterData(jsonData){		// 解析章节数据
+					var jsonObj = JSON.parse(jsonData);
+					var html = '<h4>'+jsonObj.t+'</h4>';
+					for(var j=0; j<jsonObj.p.length;j++){
+						html += "<p>"+jsonObj.p[j]+"</p>";
+					}
+					return html;
+				}
+				return function(data){
+					container.html(parseChapterData(data));
+				}
+			}
+
+			function Eventhander() {
+				// todo 交互事件绑定
+				// touch
+				// zepto tap
+				$('#action_mid').click(function(){				// 控制头部和底部显隐
+					
+					if(Dom.top_nav.css('display') == 'none') {
+						Dom.bottom_nav.show();
+						Dom.top_nav.show();
+					} else {
+						Dom.bottom_nav.hide();
+						Dom.top_nav.hide();
+						Dom.font_set.hide();
+						Dom.font_button.removeClass('on');
+					}
+				});
+
+				Dom.font_button.click(function() {				// 唤起字体和背景面板
+					// alert(0)
+					if(Dom.font_set.css('display') == 'none') {
+						Dom.font_set.show();
+						Dom.font_button.addClass('on');
+					}else {
+						Dom.font_set.hide();
+						Dom.font_button.removeClass('on');
+					}
+				});
+
+				Dom.night_day_switch_button.click(function(){	// 切换白天夜晚皮肤
+					// todo 触发背景切换事件
+					// alert(9);
+					if($(this).hasClass('icon-yueliang')){
+						$(this).addClass('icon-taiyang').removeClass('icon-yueliang');
+						
+						oBody.css('background-color','#000');
+						Util.StorageSetter('background-color','#000');
+					}else {
+						$(this).addClass('icon-yueliang').removeClass('icon-taiyang');
+						oBody.css('background-color','#fff');
+						Util.StorageSetter('background-color','#fff');
+					}
+					
+				});
+
+				$('#large-font').click(function(){							// 变大字体
+						initFontSize +=1;
+						initFontSize= initFontSize>23 ? 24 : initFontSize;
+						console.log(initFontSize);
+						RootContainer.css('font-size',initFontSize);
+						Util.StorageSetter('font-size',initFontSize);
+				});
+
+				$('#small-font').click(function(){							// 变小字体
+						initFontSize -=1;
+						initFontSize= initFontSize<8 ? 7 : initFontSize;
+						// console.log(initFontSize);
+						RootContainer.css('font-size',initFontSize);
+						Util.StorageSetter('font-size',initFontSize);
+				});
+
+				oBody.click(function(){					// 测试拿到body
+					// alert(1)
+				});
+
+				for(var i=1;i<=6;i++){													// 改变背景颜色
+						$('.bk-container:nth-child('+i+')').click(function() {	
+						bgcolor = $(this).css('background-color');
+						// console.log(bgcolor);
+						oBody.css('background-color',bgcolor);
+						Util.StorageSetter('background-color',bgcolor);
+					})
+				};
+				
+				Win.scroll(function() {									// 屏幕滚动隐藏头部和底部
+					Dom.bottom_nav.hide();
+					Dom.top_nav.hide();
+					Dom.font_set.hide();
+					Dom.font_button.removeClass('on');
+				});
+
+				// 实现翻页绑定
+				$('#prev_button').click(function(){
+					// todo 获得章节翻页数据，数据拿出来渲染
+					readerModel.prevChapter(function(data){
+						readerUI(data);
+					});
+				});
+
+				$('#next_button').click(function(){
+					readerModel.nextChapter(function(data){
+						readerUI(data);
+					});
+				});
+			}
+
+			main();
+
+			// return function(){
+			// 	Util :Util
+			// }
+		})();
+	</script>
+</body>
+</html>

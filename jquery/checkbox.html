@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+<ul class="list">
+    <input type="checkbox">
+    <input type="checkbox">
+    <input type="checkbox">
+    <input type="checkbox">
+    <input type="checkbox">
+</ul>
+<input type="checkbox" id="all">全选
+
+
+<script src="../public/js/libs/jquery-3.1.1.min.js"></script>
+<script src="./js/checkbox.js"></script>
+<script type="text/javascript">
+  // alert($);
+  $(function(){   
+    var list = $('.list input');
+    var all = $('#all');
+    checkbox(all,list);
+  });
+
+</script>
+  
+</body>
+</html>

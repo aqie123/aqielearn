@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Vue1.0组件+模板</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.css">
+	<script src="vue1.0/dist/vue.js"></script>
+	<script src="learn/vue-resource.js"></script>
+</head>
+<body>
+	<div id="box">
+		<span v-text='a' :style="{textDecoration: 'underline'}"></span>
+		<p>组件就是大的对象</p>
+		<ul>
+			<li>1.Vue.extend;全局组件</li>
+			<li>2</li>
+			<li></li>
+		</ul>
+		<aaa></aaa>
+		<bbb></bbb>
+		<my-ccc></my-ccc>
+		<my-ddd></my-ddd>
+		<eee></eee>
+	
+	</div>
+
+	<a href="http://hjj20040849.iteye.com/blog/1509016">会话存储</a>
+	<template id="eee">
+		<h3>这是eee,模板的第二种写法</h3>
+		<ul>
+			<li v-for="value in arr">{{value}}</li>
+		</ul>
+	</template>
+
+	<script type="template" id="ddd">
+		<h2>这是ddd,局部组件第二种写法{{msg}}</h2>
+		<ul><li>这是模板ddd</li></ul>
+	</script>
+
+
+	<script src="public/js/jquery-3.1.1.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		var Aaa = Vue.extend({			//全局组件
+			data(){				//简写方式,类似 data function()	
+				return	{
+					msg:'组件里面放数据,data必须是函数，函数必须返回数据(json)',
+				}				
+			},
+			template:'<h3 @click="change">{{msg}}</h3>',
+			methods:{
+				change(){
+					this.msg='我变了,我是Aaa'
+				}
+			}
+		});
+		var a = new Aaa();		//这个类似vm
+		console.dir(a);
+		Vue.component('aaa',Aaa);			//接收组件名称,(第一种方式)
+
+		Vue.component('bbb',{				//(第二种方式)
+			template:'<h4>我是第二种方式bbb，我用的最多</h4>'
+		});
+
+		// 局部组件
+		var Ccc = Vue.extend({
+			template:'<h2>我是局部组件Ccc{{msg}}</h2>',
+			data(){
+				return{
+					msg:'吼吼吼'
+				}
+			}
+		});
+
+		
+		var vm= new Vue({
+			el:'#box',
+			data:{
+				a:'aqie'
+			},
+			json:{
+
+			},
+			methods:{
+				
+			},
+			components:{		//局部组件
+				'my-ccc':Ccc,
+				'my-ddd':{
+					template:'#ddd',
+					data(){
+						return{
+							msg:'局部组件'
+						}
+					},
+				},
+				'eee':{
+					template:'#eee',
+					data(){
+						return{
+							msg:'模板第二种写法啊切',
+							arr:['aqie1','aqie2','aqie3'],
+						}
+					}
+				}
+			},
+		})
+		Vue.config.devtools = true;
+	</script>
+</body>
+</html>

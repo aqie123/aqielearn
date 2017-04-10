@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    textarea{
+      width: 175px;
+      height:100px;
+    }
+  </style>
+</head>
+<body>
+<form action="test1.html" name ="form1" onsubmit="return true">
+  <textarea placeholder="请输入内容"></textarea>
+  
+  <input type="hidden" name="msg" value="">
+  <button>提交</button>
+  <br>
+  <input type="" name="count" value="" placeholder="计数" readonly="readonly">
+</form>
+</body>
+  
+<script src='class/function.js'></script>
+<script type="text/javascript">
+  var btn = document.getElementsByTagName('button')[0];
+  var tara = document.getElementsByTagName('textarea')[0];
+  var count = document.getElementsByTagName('input')[1];
+  var input = document.form1.msg.value;
+  
+  btn.onclick = function(){
+    // alert(getmsg());
+    // alert(input);
+    document.form1.msg.value = getmsg();
+  }
+
+  
+  tara.onkeyup=function(){
+    var str = tara.value;
+    count.value = getLength(str);
+  }
+</script>
+</html>
