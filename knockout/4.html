@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>组合数据类型绑定使用</title>
+	<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div>
+		年：<input type="text" data-bind="value:Year"><br>
+		<!-- 文本输入框，所以写value -->
+		月：<input type="text" data-bind="value:Month"><br>
+		日：<input type="text" data-bind="value:Day"><br>
+		日期：<span data-bind="html:Date"></span><!-- Year()+'-'+Month()+'-'+Day() --><br>
+		复用<input type="" name="" data-bind="value:Date">
+
+	</div>
+	<script src="../public/js/jquery-3.1.1.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../public/js/knockout-3.4.1.js"></script>
+    <script type="text/javascript">
+    //ko方法   
+	$(function(){
+		var ViewModel = function(){
+			var self =this;
+			self.Year = ko.observable("");
+			self.Month = ko.observable("");
+			self.Day = ko.observable("");
+
+			//组合
+			self.Date = ko.computed(function(){
+				return self.Year()+'年'+self.Month()+'月'+self.Day()+'日';  //需要加self
+
+			},self);//可以调用ViewModel中方法
+			self.Date = ko.pureComputed({
+				write:function(value){  //input接收到的值
+					var indexOfYear = value.indexOf('年');
+					var indexOfMonth = value.indexOf('月');
+					var indexOfDay = value.indexOf('日');
+					//对用户输入数字进行正则过滤
+					var year = value.substring(0,indexOfYear);
+						if(!/^\d{4}$/.test(year)){
+							alert("请输入四位阿拉伯数字年份");
+							return false;
+						}
+					self.Year(year);//分别编辑赋值
+					var month = value.substring(indexOfYear+1,indexOfMonth);
+						if(!/^[0-9][0-2]$/.test(month)){
+							alert("请输入两位合法阿拉伯数字月份");
+							return false;
+						}
+					self.Month(month);
+					var day = value.substring(indexOfMonth+1,indexOfDay);
+						if(!/^[0-3][0-9]$/.test(day)){
+							alert("请输入两位合法天数数字");
+							return false;
+						}
+										
+					self.Day(day);
+				},
+				read:function(){
+					return self.Year()+'年'+self.Month()+'月'+self.Day()+'日';
+				},
+				owner:self
+			});
+		};
+		var currentViewModel = new ViewModel(); //实例化ko模型
+        ko.applyBindings(currentViewModel);//实例化模型绑定到当前页面 
+		
+	});
+    </script>
+</body>
+</html>

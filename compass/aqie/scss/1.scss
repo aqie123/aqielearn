@@ -1,0 +1,119 @@
+
+@import "part";//导入scss文件
+$fontSize:17px;
+$fontSize:12px !default;
+$fontStack: Helvetica,sans-serif;
+$linkColor :#08c #333 !default; //数组
+$paddings:5px 10px 6px 7px;
+$maps:(color:red,borderColor:blue);
+$className:main;
+$text_info:lightblue;  //-_是等同的
+body{
+	$color:red !global;
+	color:$color;
+	font-size: $fontSize;
+	font-family: $fontStack;//变量1
+}
+nav{       //嵌套2
+	ul{
+		margin:1;
+		padding:0;
+		list-style:none;
+	}
+	li{
+		display:inline-block;
+	}
+	a{
+		display: block;
+	}
+}
+@mixin box-sizing($sizing){  //定义代码片段3
+	-webkit-box-sizing:$sizing;
+	   -moz-box-sizing:$sizing;
+	   	    box-sizing:$sizing;
+}
+.box-border{
+	border:1px solid #ccc;
+	@include box-sizing(border-box);
+}
+.message{
+	border:1px solid #ccc;
+	padding:10px;
+	color:#333;
+}
+.success{        //扩展继承4
+	@extend.message;
+	border-color: green;
+}
+.container{
+	width:100%;
+}
+article[role="main"]{  //运算5
+	float:left;
+	width:600px /960px*100%;
+}
+aside[role="complimentary"]{
+	float:right;
+	width:300px / 900px *100%;
+}
+a{
+	text-decoration: none;
+	color:$linkColor;
+	padding:$paddings;
+	padding-left: 9px;
+	&:hover{           //引用父选择器 
+		color:nth($linkColor,2)
+	}
+	&.content{
+		color:green;
+	}
+	@at-root .container{  //跳出嵌套
+		width:1007px;
+	}
+	@media screen and (max-width:600px){
+	@at-root (without:media rule) {
+		.container{
+		background: lightgreen;
+	   }
+   }
+	
+}
+	 @at-root .text-info{
+		color:$text-info;
+		@at-root nav &{
+			color:blue;
+		}
+	}
+}	
+footer{
+	color:$color;
+	background-color: map-get($maps,color);
+	border-color:map-get($maps,borderColor);
+}
+.#{$className}{
+	width:200px;
+	height: 400px;
+}
+.aqie_test{
+	border-width: 1px;
+}
+/*! 链式继承*/
+%one{        //占位选择器，不会在css中生成，提供公共样式
+	border:1px solid red;
+}
+.two{
+	@extend %one;
+	color:red;
+}
+.three{
+	@extend %one, .two;
+	border-radius: 2px;
+}
+.aqie span{
+	font-weight: bold;
+}
+/*！交叉继承，会引出麻烦*/
+div .content{   
+	@extend span;
+}
+

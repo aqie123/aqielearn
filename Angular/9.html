@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>directive与Controller间对话</title>
+	<link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min.css">
+	<script src="angular.min.js"></script>
+
+</head>
+<body>
+	<div ng-app="app">
+		<div ng-controller="AppCtrl">
+			<div enter="deletData()">我在这</div>
+		</div>
+	</div>
+
+	<script src="../public/js/jquery-3.1.1.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		var app= angular.module('app',[])
+		app.controller('AppCtrl',function($scope){
+			$scope.loadMoreData=function(){
+				alert("正在加载数据")
+			}
+			$scope.deletData=function(){
+				alert("正在删除数据")
+			}
+		})
+		app.directive('enter',function(){
+			return{
+				restrict:'A',
+				link:function(scope,element,attrs){
+					element.bind('mouseenter',function(){
+						// scope.loadMoreData(); 第一种方法
+						// scope.$apply("loadMoreData()");第二种方法
+						scope.$apply(attrs.enter);//更灵活
+
+					})
+				}
+			}
+		})
+		
+	</script>	
+</body>
+</html>

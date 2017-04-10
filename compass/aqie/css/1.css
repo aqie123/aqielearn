@@ -1,0 +1,90 @@
+@charset "UTF-8";
+header {
+  font-family: "微软雅黑"; }
+
+body {
+  color: red;
+  font-size: 17px;
+  font-family: Helvetica, sans-serif; }
+
+nav ul {
+  margin: 1;
+  padding: 0;
+  list-style: none; }
+nav li {
+  display: inline-block; }
+nav a {
+  display: block; }
+
+.box-border {
+  border: 1px solid #ccc;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.message, .success {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #333; }
+
+.success {
+  border-color: green; }
+
+.container {
+  width: 100%; }
+
+article[role="main"] {
+  float: left;
+  width: 62.5%; }
+
+aside[role="complimentary"] {
+  float: right;
+  width: 33.33333%; }
+
+a {
+  text-decoration: none;
+  color: #08c #333;
+  padding: 5px 10px 6px 7px;
+  padding-left: 9px; }
+  a:hover {
+    color: #333; }
+  a.content {
+    color: green; }
+  .container {
+    width: 1007px; }
+.container {
+  background: lightgreen; }
+
+  .text-info {
+    color: lightblue; }
+    nav .text-info {
+      color: blue; }
+
+footer {
+  color: red;
+  background-color: red;
+  border-color: blue; }
+
+.main {
+  width: 200px;
+  height: 400px; }
+
+.aqie_test {
+  border-width: 1px; }
+
+/*! 链式继承*/
+.two, .three {
+  border: 1px solid red; }
+
+.two, .three {
+  color: red; }
+
+.three {
+  border-radius: 2px; }
+
+.aqie span, .aqie div .content, div .aqie .content {
+  font-weight: bold; }
+
+/*！交叉集成，会引出麻烦*/
+
+/*# sourceMappingURL=1.css.map */

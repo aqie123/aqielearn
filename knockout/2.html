@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>下拉选项卡绑定</title>
+	<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+		<!-- 数组选项卡 -->
+        <select id="userNameList" data-bind="options:userNames,optionsText:'key',optionsValue:'value',selectedOptions:selectedUserName">
+        <!-- selectedOption处理点击显示 -->
+            
+        </select>
+        <a href="#" id="showSelectValue">显示</a>
+        <b id="selectValue" data-bind="html:selectedUserName"></b> 
+
+	<script src="../public/js/jquery-3.1.1.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../public/js/knockout-3.4.1.js"></script>
+    <script type="text/javascript">
+    		// function RenderSelectOptions(datas,selectNode){
+      //       	var optionString = "";
+      //      		for(var i in datas){
+      //               optionString +="<option value="+datas[i]+">"+datas[i]+"</option>";
+      //           }
+      //           selectNode.html(optionString);
+      //       }
+            $(document).ready(function(){
+             /**
+            * ko方式
+            */
+            
+            var ViewModel = function(){
+                var self = this;
+                // self.userNames = ko.observableArray(["tom","jerry","smith"]);//监控数组
+                self.userNames = ko.observableArray([{key:"tom",value:"1"},{key:"jerry",value:"2"},{key:"smith",value:"3"}]);//定义对象数组
+                self.selectedUserName = ko.observable();//右侧显示事件
+            };
+            var currentViewModel = new ViewModel(); //实例化ko模型
+            ko.applyBindings(currentViewModel);//实例化模型绑定到当前页面 
+            //传统方式数组类型双向绑定
+            /*
+            var userNames = ["tom","jerry","smith"];
+            var userNameList = $("#userNameList");
+            var showSelectValue= $("#showSelectValue");
+            RenderSelectOptions(userNames,userNameList);
+            showSelectValue.click(function(){
+                var selectValue = $("#selectValue");
+                selectValue.html(userNameList.val());
+
+            });*/
+            })
+    </script>
+</body>
+</html>

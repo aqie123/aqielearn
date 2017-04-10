@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min.css">
+	<script src="angular.min.js"></script>
+
+</head>
+<body>
+		<fieldset>
+		<legend>第一个例子</legend>
+		<b>计算：</b><br>
+		<table>
+			<tr>
+				<td>单价（美元）</td>
+				<td>数量</td>
+			</tr>
+			<tr>
+				<td><input type="number" name="" required ng-model="qty"></td>
+				<td><input type="number" name="" required ng-model="cost"></td>
+			</tr>
+		</table>
+		<b>金额：</b>{{qty*cost | currency}}
+	</fieldset>
+	
+
+	<fieldset>
+		<b>改变model来控制dom</b>
+		<legend>第二个例子</legend><br>
+		<input type="text" name="" ng-model="data.msg"/>
+		<div class="{{data.msg}}">我是一个{{data.msg}}</div>
+
+	</fieldset>
+
+
+
+	<script src="../public/js/jquery-3.1.1.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>	
+</body>
+</html>

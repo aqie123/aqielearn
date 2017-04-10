@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ECMA</title>
+	<script src="../public/EMCA/traceur.js"></script>
+	<script src="../public/EMCA/bootstrap.js"></script>
+</head>
+<body>
+
+<script type="module">
+
+	console.log("ES5:");
+	var a = [];          //变量提升
+	for(var i =0;i<10;i++){
+		var c =i;
+		a[i] = function(){
+			console.log(c);
+		}
+	}
+	a[5]();
+	console.log("ES6");
+	let b = [];
+	for(let j=0;j<10;j++){
+		let d=j;
+		b[j] = function(){
+			console.log(d);
+		}
+	}
+	b[5]();
+
+	//暂时性死区
+	// var e =100;
+	console.log(e);
+	let e = 3;
+	console.log(e);
+	//模块内部不允许重复声明，模块之间可以重复声明
+	function fun(){
+		let num =100;
+		if(true){
+			let num = 200;
+		}
+		console.log(num);
+	};
+	fun();
+	//const
+	if(true){
+		const Pi = 3.14;  //也有暂时性死区，不可重复声明
+		console.log(Pi); //同样会产生块级作用域
+	};
+	//const对象
+	console.log("const对象");
+	const person = {};
+	person.name ="aqie";
+	person.age = 25;
+	console.log(person.name);
+	person.age = 27;
+	console.log(person.age);
+
+	//const 数组   注意不可以重新赋值：arr=["aqie"];
+	const arr = [];
+	arr.push("hello word");
+	arr.length = 0;
+
+	//const对象冻结
+	const person1 = Object.freeze({
+		name : "aqie1"
+	});
+	// person1.name = "aqie1";           //严格模式下，会报错
+	
+	console.log(person1.name);
+
+	//const如何设置跨模块常量
+/*	
+	//module.js
+	export const FloatvariantName = "3.14";  //会输出常量
+	export const intvariantName = "100";  //会输出常量
+	export const variantName = "variantValue";  //会输出常量
+
+	//use.js
+	inport * as variant from './module';
+	console.log(variant.FloatvariantName);
+	console.log(variant.intvariantName);
+	console.log(variant.variantName);
+
+	//otheruse.js  只引入后面两个
+	import {variantName,intvariantName} as variant from './module';
+	console.log(variant.intvariantName);
+	console.log(variant.variantName);
+*/	
+   //全局对象属性
+
+</script>
+<script type="text/javascript">
+	function fun(){
+		var num =100;
+		if(true){
+			var num = 200;
+		}
+		console.log(num);
+	}
+	fun();
+</script>	
+</body>
+</html>

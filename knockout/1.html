@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>简单数据绑定</title>
+	<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="content1">
+		用户名：<input type="text" id="userNameText" value="" placeholder="请输入用户名"  data-bind="value:UserName"/>
+		<p>
+			您好<b id="userNameView" data-bind="html:UserName"></b>
+		</p>
+        <p>
+            您好<b id="userNameView" data-bind="html:UserName"></b>again
+        </p>
+        <input type="hidden" name="" data-bind="html:UserName"/>
+	</div>
+
+
+	<script src="../public/js/jquery-3.1.1.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../public/js/knockout-3.4.1.js"></script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		
+    		/**
+             * 传统方式
+             * @type {[type]}
+             */
+            /*
+    		var userNameText = $('#userNameText');
+    		var userNameView =$('#userNameView');
+    		userNameText.bind("change",function(){
+    			var userName = $(this).val();
+    			userNameView.html(userName); //赋值操作
+    		});
+            */
+           /**
+            * ko方式
+            */
+            var ViewModel = function(){
+                var self = this;
+                self.UserName = ko.observable("");//knockout监控用户名值
+            };
+            var currentViewModel = new ViewModel(); //实例化ko模型
+            ko.applyBindings(currentViewModel);//实例化模型绑定到当前页面         
+    	});
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>留言发送内容</title>
+	<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div data-bind="component:'MessageAndList'"></div><!-- 以字符串方式写入-->
+<div data-bind="component:{name:'MessageAndList',params:'jerry'}"></div>
+	<script src="../public/js/jquery-3.1.1.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../public/js/knockout-3.4.1.js"></script>
+    <script type="text/javascript">
+    //ko方法
+	$(function(){
+        ko.components.register(
+        	'MessageAndList',{
+        		viewModel:function(params){ //定义属性方法
+        			var self =this;
+        			self.Account = ko.observable(params!==null?params:"tom");
+        			self.MessageText = ko.observable('');
+        	 		self.Send =function(){//发送文本方法
+        				self.MessageList.push({message:self.MessageText(),account:self.Account()});//方法加（）
+        				self.MessageText('');//清空
+        			}
+        			self.MessageList= ko.observableArray([]);//历史发送数据数组
+
+        		},
+        		template:'<input type="" name="" data-bind="value:MessageText"/><button id="send" \
+        					data-bind="click:Send">	提交</button>\
+					<ul data-bind="foreach:MessageList" class="unstyled">\
+						<li><p data-bind="html:message">文本1</p> <b data-bind="html:account"></b></li>\
+					</ul>'//自定义组件html元素拼成字符串
+        	}
+        );
+		ko.applyBindings();
+	});
+    </script>
+</body>
+</html>

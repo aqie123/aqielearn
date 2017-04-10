@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>4-controller使用</title>
+	<link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min.css">
+	<script src="angular.min.js"></script>
+
+</head>
+<body ng-app="app">
+<div ng-controller="FristCtrl">
+	<h1 ng-clock class="ng-clock">{{msg}}第一中显示方法</h1>
+	<h2 ng-bind="msg">第二种显示方法</h2>
+
+	<input type="" name="" ng-model="aqie">
+	<p>ng-bind是从$scope -> view的单向绑定ng-modle是$scope <-> view的双向绑定</p>
+	<p>{{aqie}}{{msg}}</p>
+	<div ng-bind="'用户名：'+aqie"></div>
+</div>
+<div ng-controller="SCtrl">
+	<h1>{{aqie}}aadsafsdf</h1>
+	<h2>{{todo.user}}</h2>
+</div>
+
+
+	<script src="../public/js/jquery-3.1.1.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		var model = {
+			user:'aqieqqq',
+			items:[
+			{action:'aqie1',done:true}
+			]
+		}
+		angular.module('app',[])
+		.controller('FristCtrl',function($scope){
+			$scope.msg="helllo angular";
+			$scope.test;
+			$scope.aqie="啊切";
+		})
+		.controller('SCtrl',function($scope){
+			$scope.aqie="啊切";
+			$scope.todo=model;
+		})
+	</script>	
+</body>
+</html>

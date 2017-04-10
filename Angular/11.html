@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Angular</title>
+	<link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min.css">
+	<script src="angular.min.js"></script>
+
+</head>
+<body ng-app="app">
+	<!-- <hello></hello> -->
+	<div class="hello"></div>
+
+
+	<script src="../public/js/jquery-3.1.1.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		var app=angular.module("app",[]);
+		app.directive('hello',function(){//回调函数
+			return{
+				// restrict:'E',
+				// template:'<div>hello,aqie</div>',
+				// replace:true,
+				restrict:'C',
+				link:function(){
+					alert("wozaizhe");
+				}
+			}
+		})
+		
+	</script>
+</body>
+</html>

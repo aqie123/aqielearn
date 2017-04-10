@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>自定义Service服务</title>
+	<link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min.css">
+	<script src="angular.min.js"></script>
+
+</head>
+<body ng-app="app">
+	<div ng-controller="MyCtrl">
+		<h1>{{msg}}</h1>
+		<h2>{{realname}}</h2>
+		<h3>{{http}}</h3>
+		<h4>Data的返回值：{{data.msg}}</h4>
+		<h4>factory2的返回值：{{uname2}}</h4>
+		<h4>service的返回值：{{uname}}</h4>
+		
+	</div>
+
+
+	<script src="../public/js/jquery-3.1.1.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		angular.module("app",[])
+		// value constant('name', value) factory service provider(创建模式)
+		.value('realname','aqie')  //value值可以改变
+		.value('realname','aqie1')
+		.constant('http', "www.baidu.com")    //常量值不可以改变
+		.constant('http', "www.baidu1.com1")
+		.factory('Data',function(){
+			return{
+				msg:'你好啊，啊切',
+				setMsg:function(){
+					this.msg="我不好";
+				}
+			}
+		})
+		.factory('Data2',function(){
+			return new dd();
+		})
+		.controller("MyCtrl",function($scope,realname,http,Data,Data2,User){
+			$scope.msg="aqie";
+			$scope.realname=realname;
+			$scope.http=http;
+			//factory使用方法
+			$scope.data=Data;
+			Data.setMsg();//调用方法
+			$scope.uname2=Data2.getName();
+			// $scope.uname3=Data3.getName();
+			//service使用方法
+			$scope.uname=User.getName();
+			
+		})
+		.service('User', function(){
+			this.firstname="上官";
+			this.lastname="aqie";
+			this.getName=function(){
+				return this.firstname+this.lastname;
+			}
+			
+		})
+		function dd(){
+			this.firstname="上官";
+			this.lastname="飞燕";
+			this.getName=function(){
+				return this.firstname+this.lastname;
+			}
+		}
+	</script>	
+</body>
+</html>

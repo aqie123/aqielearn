@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>简单的计数器+多个事件绑定</title>
+	<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+		<p>按钮点击一次，计数加一</p>
+		<div>
+			<b id="countView" data-bind="html:CurrentIndex,style:{color:IndexColor},visible:CurrentIndex()<10">0</b><br>
+			<input type="button" name="" value="点击" id="countButton" data-bind="event:{click:CounterAdd,mouseover:CountOver,mouseout:CountOut}">
+		</div>
+	
+
+
+	<script src="../public/js/jquery-3.1.1.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../public/js/knockout-3.4.1.js"></script>
+    <script type="text/javascript">
+    //ko方法
+	$(function(){
+		/*
+		传统方法
+		 */
+		/*
+		var currentIndex = 0;
+		var countButton = $("#countButton");
+		var countView = $("#countView");
+		countButton.click(function(){
+			currentIndex++;
+			countView.html(currentIndex);
+		})*/
+
+		var ViewModel = function(){
+			var self =this;
+			self.CurrentIndex = ko.observable(0);
+			self.CounterAdd = function(){
+				var currentIndex = self.CurrentIndex();//获取到b标签值传给input
+				if(currentIndex>=10){
+					alert(currentIndex)
+					alert("您点击次数过多");
+					return false;
+				}else{
+					currentIndex+=1;
+					self.CurrentIndex(currentIndex);
+				}
+				
+			};
+			self.IndexColor = ko.observable("yellow");
+			self.CountOver =function(){//鼠标移动到按钮上事件
+				self.IndexColor("green");
+				
+			};
+			self.CountOut = function(){  //鼠标移开
+				self.IndexColor("black");
+			};
+		};
+		var currentViewModel = new ViewModel(); //实例化ko模型
+        ko.applyBindings(currentViewModel);//实例化模型绑定到当前页面 
+		
+	});
+    </script>
+</body>
+</html>

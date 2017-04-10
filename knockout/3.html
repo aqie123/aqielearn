@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="content1">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>英文名</th>
+				<th>中文名</th>
+				<th>描述</th>
+			</tr>
+		</thead>
+		<tbody id="tableBody" data-bind="foreach:Planets">
+			<tr>
+				<td data-bind="html:$index"></td>
+				<!-- <td data-bind="html:id"></td> -->
+				<td data-bind="html:englishName"></td>
+				<td data-bind="html:(chineseName =='地球' ?chineseName+'&nbsp;<b style='+'color:red'+'>(家)</b>':chineseName)"></td>
+				<td data-bind="html:description"></td>
+			</tr>		
+		</tbody>
+	</table>
+</div>
+	<a href="#" data-bind="click:newPlanet" style="color:red">新增</a>
+	<!-- 新增数组元素 -->
+
+
+	<script src="../public/js/jquery-3.1.1.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../public/js/knockout-3.4.1.js"></script>
+    <script type="text/javascript">
+    	var Planets = [
+		{id:1,englishName:"Mercury",chineseName:"水星",description:"离太阳最近的一颗行星"},
+		{id:2,englishName:"Venus",chineseName:"金星",description:"拥有非常厚的大气层"},
+		{id:3,englishName:"Earth",chineseName:"地球",description:"我们的家园"},
+		{id:4,englishName:"Mars",chineseName:"火星",description:"一颗红色星球"},
+		{id:5,englishName:"Juptiet",chineseName:"木星",description:"太阳系最大行星"},
+		{id:6,englishName:"Saturn",chineseName:"土星",description:"拥有最美丽光环行星"},
+		{id:7,englishName:"Uranus",chineseName:"天王星",description:"内核是个巨大海洋行星"},
+		{id:8,englishName:"Neptune",chineseName:"海王星",description:"一颗优雅的淡蓝色行星"},
+		{id:9,englishName:"Pluto",chineseName:"冥王星",description:"曾经是行星的行星"}
+
+	];
+	//原始方法
+	/*
+	function RenderPlane(){//将数组拼接成HTML字符串，并将该html字符串绑定到table的html元素内
+		var tableBody = $("#tableBody");
+		var planetsString = "";
+		for(var i in Planets){
+			planetsString+="<tr>";
+			planetsString+="<td>"+Planets[i].id+"</td>";
+			planetsString+="<td>"+Planets[i].englishName+"</td>";
+			planetsString+="<td>"+Planets[i].chineseName+"</td>";
+			planetsString+="<td>"+Planets[i].description+"</td>";
+			planetsString+="</tr>";
+		}
+		tableBody.html(planetsString);
+	}
+	$(function(){
+		RenderPlane();
+	})
+	*/
+	//ko方法
+	$(function(){
+		var ViewModel = function(){
+			var self =this;
+			self.Planets = ko.observableArray(Planets);//传入定义好数组
+			self.newPlanet = function(){
+				// {id:10,englishName:"aqie",chineseName:"啊切星",description:"全宇宙最大行星"}
+				self.Planets.push({id:10,englishName:"aqie",chineseName:"啊切星",description:"全宇宙最大行星"});
+				return false;// 因为是a标签点击事件
+			}
+		};
+		// console.log(self.newPlanet);
+		var currentViewModel = new ViewModel(); //实例化ko模型
+        ko.applyBindings(currentViewModel);//实例化模型绑定到当前页面 
+		
+	});
+
+    </script>
+</body>
+</html>

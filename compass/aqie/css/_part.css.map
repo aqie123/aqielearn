@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": ";AAAA,MAAM;EACL,WAAW,EAAE,MAAM",
+"sources": ["../scss/_part.scss"],
+"names": [],
+"file": "_part.css"
+}

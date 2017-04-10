@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> -->
+  <style type="text/css">
+  body{
+    background: url(./picture/home-bg.jpg);
+     background-size: cover;
+  }
+
+
+    #home{
+  
+  /*background: url(./picture/home-bg.jpg);*/
+  background-size: cover;
+  color:#000;
+  text-align: center;
+  width:100%;
+  height:100%;
+}
+/*左上*/
+  .triangle{
+    width:0px;
+    height:0px;
+    border-top:60px solid #057C0F;
+    border-right: 60px solid transparent;
+  }
+  /*向下*/
+    .triangle1{
+    width:0px;
+    height:0px;
+    border-left:60px solid transparent;
+    border-right: 60px solid transparent;
+    border-top:120px solid red;
+  }
+  /*向左*/
+    .triangle2{
+    width:0px;
+    height:0px;
+    border-top:60px solid transparent;
+    border-bottom:60px solid transparent;
+    border-right: 120px solid red;
+  }
+  </style>
+</head>
+<body>
+   <!-- home -->
+   <section id="home">
+    <div class="lvjing">
+      <div class="comtainer">
+        <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-10">
+            <h2>Company Name</h2>
+            <p>Free html5 templates Made by More Templates </p>
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <td><a href="http://blog.csdn.net/wzs298/article/details/48324555">北京</a></td>
+                </tr>
+                <tr>
+                  <td><a href="http://blog.csdn.net/renfufei/article/details/38143947">上海</a></td>
+                </tr>
+                <tr>
+                  <td>深圳</td>
+                </tr>
+                <tr>
+                  <td>香港</td>
+                </tr>
+              </tbody>
+            </table>
+            
+          </div>
+          <div class="col-lg-1"></div>
+        </div>
+      </div>
+    </div>
+   </section>
+   <!-- home结束 -->
+
+  <div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+    Dropdown
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+  </ul>
+</div>
+<div class="triangle2">
+  
+</div>
+
+
+
+
+
+
+   <input type="" name="" class="num1"><button type="button" class="btn2">按钮二</button>
+    <input type="" name="" class="num2"><button type="button">按钮三</button>
+	<script src="public/js/jquery-3.1.1.min.js"></script>				
+	<script src="public/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    //alert($)
+    var num1 = $(".num1");
+    var num2 = $(".num2");
+    var a=[],b;
+    $(".btn2").click(function(){
+      a=num1.val();
+      a=a.split('');
+      a.splice(0,2,88);
+      a=a.join("");
+      num2.val(a)
+    })
+    
+    // a.push(2);
+    // console.log(a);
+    // a.splice(0,2,80);
+    // console.log(a);
+    
+  </script>
+</body>
+</html>

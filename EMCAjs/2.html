@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>EMCA</title>
+	<script src="../public/EMCA/traceur.js"></script>
+	<script src="../public/EMCA/bootstrap.js"></script>
+</head>
+<body>
+
+<script type="module">
+
+//Destructuring 从数组和对象中提取值，对变量进行赋值，称为解构
+//数组解构
+//ES6
+ var [a,b,c,...d] = [1,2,3,4,5,6,7,8];
+ console.log(a);
+ console.log(d);
+
+ //制定默认值
+ var [temp = "string"] =[];
+ console.log(temp);
+ var [p,q = "aaa"] = ["bbb",undefined];
+ console.log(q);
+
+ //非遍历结构 --报错
+ // var [t] =1;       //错误 false,,NAN不是一个函数 undefined,null未定义ateval
+
+
+//Iterator 接口           ?????????????这是什么
+let [m,n,o] = new Set(["a","b","c"]);
+console.log(m);
+function* fibs(){   //指针函数
+	let m =0;
+	let n =1;
+	while(true){
+		yield m;
+		[m,n] = [n,m+n];
+
+	}
+};
+var [first,second,third,fourth,fifth,sixth] = fibs();  //fibs满足解构赋值
+console.log(sixth);      //只要某种结构具有iterator接口，都可以采用数组形式解构赋值
+
+//对象解构赋值   对象属性没有次序
+//
+var {id:myid,name,age} = {name:"aqie",age:25,id:'007'};
+console.log(name);
+console.log(myid);  //注意匹配顺序
+
+let object = {first:"hello",last:"world"};
+let {first:firstName,last:lastName} = object;  //解构
+</script>	
+</body>
+</html>

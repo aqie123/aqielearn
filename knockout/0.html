@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	
+
+
+	<script src="../public/js/jquery-3.1.1.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../public/js/knockout-3.4.1.js"></script>
+    <script type="text/javascript">
+    //ko方法
+	$(function(){
+		var ViewModel = function(){
+			var self =this;
+		};
+		var currentViewModel = new ViewModel(); //实例化ko模型
+        ko.applyBindings(currentViewModel);//实例化模型绑定到当前页面 
+		
+	});
+    </script>
+</body>
+</html>

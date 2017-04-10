@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>eements用法</title>
+	<link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min.css">
+	<script src="angular.min.js"></script>
+
+</head>
+<body>
+	<div ng-controller="MCtrl">
+		<h2>{{data}}</h2>
+		
+	</div>
+	<div enter>
+		我在这
+	</div>
+	<hello></hello>
+
+
+	<script src="../public/js/jquery-3.1.1.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>	
+	<script type="text/javascript">
+		var app = angular.module("app",[])
+		.controller("MCtrl",function($scope,$http){ 
+			$scope.data="aqie";
+		})
+		app.directive('enter',function(){
+			return function(scope,element,attrs){
+				// $('#').bind('',)
+				element.bind('mouseenter',function(){
+					// console.log('我进来了');
+					element.addClass('alert alert-success');
+				})
+				element.bind('mouseleave',function(){
+					// console.log('我走了');
+					element.removeClass('alert alert-success');
+				})
+			}
+		})
+
+		app.directive('hello',function(){
+			return{
+				restrict:'E',
+				template:'<div><input ng-model="txt"/></div><br />{{txt}}',
+				
+				link:function(scope,element){
+					scope.$watch('txt',function(newval){
+						if(newval==='error'){
+							element.addClass('alert alert-danger')
+						}
+					})
+				}
+			}
+		})
+		
+	</script>
+</body>
+</html>

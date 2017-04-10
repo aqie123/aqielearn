@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Angular</title>
+	<link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min.css">
+	<script src="angular.min.js"></script>
+
+</head>
+<body>
+	<div ng-controller="AddressCtrl">
+		<ul class="list-group">
+			<li class="list-group-item" ng-repeat="a in list">{{a.name}}</li>
+		</ul>
+	</div>
+	<div ng-controller="NCtrl">{{msg}}
+		<ul ng-repeat="x in names">
+			<li>{{x.Name}}</li>
+		</ul>
+		
+
+	</div>
+
+	<!-- <div ng-controller="MCtrl">
+		<input type="text" name="" ng-model="names">
+		<button type="button" ng-click="adduser()">提交</button>
+	</div> -->
+
+
+	<script src="../public/js/jquery-3.1.1.min.js"></script>
+	<script src="../public/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		angular.module("app",[])
+		.controller('AddressCtrl', function($scope){
+				$scope.list=[
+					{name:"aqie"},
+					{name:"jbj"},
+					{name:"jjmnkm"},
+					{name:"jhaomi"}
+				]
+		})
+		.controller('NCtrl', function($scope,$http){
+			$scope.msg="aqie";
+			
+			$http.get('test.php')
+			.success(function(response){
+			 $scope.names = response.records;
+			})
+
+			
+		})
+
+	</script>	
+</body>
+</html>
